@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   cmd_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:46:35 by alermolo          #+#    #+#             */
-/*   Updated: 2024/01/16 14:27:35 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:12:49 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/minishell.h"
 
-void	parse_cmds(int argc, char **argv, t_pipe *pipex)
-{
-	int		i;
-	int		j;
+// void	parse_cmds(t_pipe *pipex, t_block *cmd_lst)
+// {
+// 	int		i;
+// 	// int		j;
 
-	i = 2;
-	j = 0;
-	if (pipex->has_heredoc)
-		i = 3;
-	pipex->cmds = malloc(sizeof(char **) * (pipex->cmd_count + 1));
-	if (!pipex->cmds)
-		free_and_exit(pipex, EXIT_FAILURE);
-	while (i < argc - 1)
-	{
-		pipex->cmds[j] = ft_split(argv[i], " \t\v\n\f\r");
-		i++;
-		j++;
-	}
-	pipex->cmds[j] = 0;
-}
+// 	i = 0;
+// 	j = 0;
+// 	pipex->cmds = malloc(sizeof(char **) * (pipex->cmd_count + 1));
+// 	if (!pipex->cmds)
+// 		free_and_exit(pipex, EXIT_FAILURE);
+// 	while (cmd_lst)
+// 	{
+// 		// pipex->cmds[j] = ft_split(argv[i], " \t\v\n\f\r");
+// 		pipex->cmds[i]
+// 		i++;
+// 		j++;
+// 	}
+// 	pipex->cmds[j] = 0;
+// }
 
 static char	**parse_paths(char **env)
 {
@@ -88,7 +87,7 @@ static char	*cmd_path(char **paths, char *cmd, int i)
 	return (NULL);
 }
 
-void	combine_paths(char **env, t_pipe *pipex)
+void	combine_paths(char **env, t_pipe *pipex, t_block *cmd_lst)
 {
 	char	**env_paths;
 	int		i;
@@ -98,17 +97,18 @@ void	combine_paths(char **env, t_pipe *pipex)
 	if (!pipex->paths)
 		free_and_exit(pipex, EXIT_FAILURE);
 	i = 0;
-	if (pipex->in_fd < 0)
+	// if (pipex->in_fd < 0)
+	// {
+	// 	pipex->paths[0] = NULL;
+	// 	i = 1;
+	// }
+	while (i < pipex->cmd_count && cmd_lst)
 	{
-		pipex->paths[0] = NULL;
-		i = 1;
-	}
-	while (i < pipex->cmd_count)
-	{
-		if (i == pipex->cmd_count - 1 && pipex->out_fd == -1)
-			pipex->paths[i] = 0;
-		else
-			pipex->paths[i] = cmd_path(env_paths, pipex->cmds[i][0], 0);
+		// if (i == pipex->cmd_count - 1 && pipex->out_fd == -1)
+		// 	pipex->paths[i] = 0;
+		// else
+		pipex->paths[i] = cmd_path(env_paths, cmd_lst->cmd, 0);
+		cmd_lst = cmd_lst->next;
 		i++;
 	}
 	if (env_paths)

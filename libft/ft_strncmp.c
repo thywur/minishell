@@ -6,11 +6,11 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:40:17 by alermolo          #+#    #+#             */
-/*   Updated: 2023/12/29 14:03:35 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:37:28 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/minishell.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

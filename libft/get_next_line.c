@@ -6,14 +6,14 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:40:38 by alermolo          #+#    #+#             */
-/*   Updated: 2024/01/02 15:01:44 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:37:46 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/minishell.h"
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10000000
+# define BUFFER_SIZE 10000
 #endif
 
 void	*free_and_null(char *s)

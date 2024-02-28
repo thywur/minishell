@@ -6,11 +6,11 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:43:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/01/16 14:26:30 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:36:16 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/minishell.h"
 
 void	err_msg(char *err)
 {

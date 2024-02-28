@@ -6,11 +6,11 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:34:41 by alermolo          #+#    #+#             */
-/*   Updated: 2024/01/05 18:18:40 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:37:22 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/minishell.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

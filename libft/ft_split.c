@@ -6,11 +6,11 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 18:06:38 by alermolo          #+#    #+#             */
-/*   Updated: 2023/12/29 14:02:40 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:37:16 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/minishell.h"
 
 char	*ft_strndup(char *src, int n)
 {
