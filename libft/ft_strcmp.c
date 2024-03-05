@@ -6,11 +6,11 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 17:39:19 by alermolo          #+#    #+#             */
-/*   Updated: 2024/02/28 16:37:19 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:00:34 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

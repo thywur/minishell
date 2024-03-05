@@ -6,11 +6,11 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 13:35:25 by alermolo          #+#    #+#             */
-/*   Updated: 2024/02/28 17:36:04 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:07:35 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static int	wait_for_children(t_pipe *pipex)
 {
@@ -23,33 +23,6 @@ static int	wait_for_children(t_pipe *pipex)
 	if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
 	return (status);
-}
-
-static void	set_fd(t_pipe *pipex, t_block *cmd_lst, int cmd_no, int fd[4])
-{
-	fd[3] = fd[1];
-	if (cmd_no == pipex->cmd_count - 1)
-		fd[3] = STDOUT_FILENO;
-	if (cmd_no == 0)
-		fd[2] = 0;
-	if (cmd_lst->redir)
-	{
-		if (cmd_lst->redir->type == REDIRECT_IN)
-			pipex->fd[2] = open(cmd_lst->redir->file, O_RDONLY);
-		else if (cmd_lst->redir->type == REDIRECT_OUT)
-			pipex->fd[3] = open(cmd_lst->redir->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		else if (cmd_lst->redir->type == REDIRECT_APPEND)
-			pipex->fd[3] = open(cmd_lst->redir->file, O_CREAT | O_RDWR | O_APPEND, 0644);
-		// else if (cmd_lst->redir->type == REDIRECT_HEREDOC)
-		// 	read_heredoc();
-		if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
-		{
-			perror(NULL);
-			free_and_exit(pipex, EXIT_FAILURE);
-		}
-	}
-	// else if (cmd_no == pipex->cmd_count - 1)
-	// 	fd[3] = pipex->out_fd;
 }
 
 static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char **env)
@@ -84,8 +57,41 @@ static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char **env)
 	free_and_exit(pipex, EXIT_FAILURE);
 }
 
+static void	set_fd(t_pipe *pipex, t_block *cmd_lst, int cmd_no, int fd[4])
+{
+	fd[3] = fd[1];
+	if (cmd_no == pipex->cmd_count - 1)
+		fd[3] = STDOUT_FILENO;
+	if (cmd_no == 0)
+		fd[2] = 0;
+	if (cmd_lst->redir)
+	{
+		// cmd_lst->redir = ft_lstlast(cmd_lst->redir);
+		if (cmd_lst->redir->type == REDIRECT_IN)
+			pipex->fd[2] = open(cmd_lst->redir->file, O_RDONLY);
+		else if (cmd_lst->redir->type == REDIRECT_OUT)
+			pipex->fd[3] = open(cmd_lst->redir->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		else if (cmd_lst->redir->type == REDIRECT_APPEND)
+			pipex->fd[3] = open(cmd_lst->redir->file, O_CREAT | O_RDWR | O_APPEND, 0644);
+		// else if (cmd_lst->redir->type == REDIRECT_HEREDOC)
+		// 	read_heredoc();
+		if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
+		{
+			perror(NULL);
+			free_and_exit(pipex, EXIT_FAILURE);
+		}
+	}
+	// else if (cmd_no == pipex->cmd_count - 1)
+	// 	fd[3] = pipex->out_fd;
+}
+
 static void	redirect(t_pipe *pipex, t_block *cmd_lst, char **env, int cmd_no)
 {
+	pipex->fd[3] = pipex->fd[1];
+	if (cmd_no == pipex->cmd_count - 1)
+		pipex->fd[3] = STDOUT_FILENO;
+	if (cmd_no == 0)
+		pipex->fd[2] = 0;
 	if (cmd_lst->redir->type == REDIRECT_IN)
 		pipex->fd[2] = open(cmd_lst->redir->file, O_RDONLY);
 	else if (cmd_lst->redir->type == REDIRECT_OUT)
@@ -100,6 +106,7 @@ static void	redirect(t_pipe *pipex, t_block *cmd_lst, char **env, int cmd_no)
 		free_and_exit(pipex, EXIT_FAILURE);
 	}
 	// pipex->fd[3] = pipex->fd[1];
+	printf("executing redirection\n");
 	if (pipex->pids[cmd_no] == 0)
 		exec_child(pipex, cmd_lst, cmd_no, env);
 	if (pipex->fd[2] > 0)
@@ -124,7 +131,11 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char **env)
 		if (cmd_lst->redir)
 		{
 			while (cmd_lst->redir->next)
+			{
+				// set_fd(pipex, cmd_lst, cmd_no, pipex->fd);
 				redirect(pipex, cmd_lst, env, cmd_no);
+				cmd_lst->redir = cmd_lst->redir->next;
+			}
 		}
 		set_fd(pipex, cmd_lst, cmd_no, pipex->fd);
 		if (pipex->pids[cmd_no] == 0)

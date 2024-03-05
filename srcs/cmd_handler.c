@@ -6,11 +6,11 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/02/28 17:40:43 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:34:09 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static void	init_struct(t_pipe *pipex, t_block *cmd_lst)
 {
@@ -73,30 +73,42 @@ int	cmd_handler(t_block *cmd_lst, char **env)
 	return (status);
 }
 
-// int	main(int argc, char **argv, char **env)
-// {
-// 	t_block	block1;
-// 	t_block block2;
-// 	(void)argc;
-// 	(void)argv;
+int	main(int argc, char **argv, char **env)
+{
+	t_block	block1;
+	t_block block2;
+	t_redir	redir1;
+	t_redir redir1_1;
+	t_redir	redir1_2;
+	(void)argc;
+	(void)argv;
 
-// 	block1.cmd = "ls";
-// 	block1.args = ft_split("ls -l", " ");
-// 	block1.redir = NULL;
-// 	block1.next = &block2;
-// 	block2.cmd = "wc";
-// 	block2.args = ft_split("wc -l", " ");
-// 	block2.redir = NULL;
-// 	block2.next = NULL;
-// 	cmd_handler(&block1, env);
-// 	free(block1.args[0]);
-// 	free(block1.args[1]);
-// 	free(block1.args);
-// 	free(block2.args[0]);
-// 	free(block2.args[1]);
-// 	free(block2.args);
-// 	return (0);
-// }
+	block1.cmd = "cat";
+	block1.args = ft_split("cat", " ");
+	block1.redir = &redir1;
+	redir1.file = "Makefile";
+	redir1.type = REDIRECT_IN;
+	redir1.next = &redir1_1;
+	redir1_1.file = "srcs/cmd_handler.c";
+	redir1_1.type = REDIRECT_IN;
+	redir1_1.next = &redir1_2;
+	redir1_2.file = "srcs/cmd_parsing.c";
+	redir1_2.type = REDIRECT_IN;
+	redir1_2.next = NULL;
+	block1.next = &block2;
+	block2.cmd = "wc";
+	block2.args = ft_split("wc -l", " ");
+	block2.redir = NULL;
+	block2.next = NULL;
+	cmd_handler(&block1, env);
+	free(block1.args[0]);
+	free(block1.args[1]);
+	free(block1.args);
+	free(block2.args[0]);
+	free(block2.args[1]);
+	free(block2.args);
+	return (0);
+}
 
 // int	main(int argc, char **argv, char **env)
 // {

@@ -6,11 +6,11 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 17:01:53 by alermolo          #+#    #+#             */
-/*   Updated: 2024/02/28 16:52:26 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:07:40 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	free_arr(char **arr)
 {

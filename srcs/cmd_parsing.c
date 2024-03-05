@@ -6,11 +6,11 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:46:35 by alermolo          #+#    #+#             */
-/*   Updated: 2024/02/28 14:12:49 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:29:59 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 // void	parse_cmds(t_pipe *pipex, t_block *cmd_lst)
 // {
@@ -115,3 +115,5 @@ void	combine_paths(char **env, t_pipe *pipex, t_block *cmd_lst)
 		free_arr(env_paths);
 	pipex->paths[i] = 0;
 }
+
+//blep
