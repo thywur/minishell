@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/05 12:34:09 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:41:31 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static void	init_struct(t_pipe *pipex, t_block *cmd_lst)
 	pipex->pids = malloc(sizeof(int) * pipex->cmd_count);
 	if (!pipex->pids)
 		free_and_exit(pipex, EXIT_FAILURE);
+	pipex->fd[0] = -1;
+	pipex->fd[1] = -1;
+	pipex->fd[2] = -1;
+	pipex->fd[3] = -1;
 }
 
 // static void	read_heredoc(int argc, char **argv, t_pipe *pipex)
@@ -95,6 +99,8 @@ int	main(int argc, char **argv, char **env)
 	redir1_2.file = "srcs/cmd_parsing.c";
 	redir1_2.type = REDIRECT_IN;
 	redir1_2.next = NULL;
+	block1.next = NULL;
+	// block1.redir = NULL;
 	block1.next = &block2;
 	block2.cmd = "wc";
 	block2.args = ft_split("wc -l", " ");

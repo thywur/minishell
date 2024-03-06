@@ -6,7 +6,7 @@
 #    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 19:17:58 by alermolo          #+#    #+#              #
-#    Updated: 2024/03/05 12:10:45 by alermolo         ###   ########.fr        #
+#    Updated: 2024/03/06 16:21:10 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,12 +37,12 @@ SOURCES 	=		srcs/exec.c			\
 #--flags-----------------------------------------------------------------------#
 
 ifeq ($(BONUS), no)
-CFLAGS		=	-Wall -Wextra -Werror -I $(LIBFT_DIR) -I $(INC_DIR)
+CFLAGS		=	-Wall -Wextra -g3  -I $(LIBFT_DIR) -I $(INC_DIR) #-Werror
 else
-CFLAGS		=	-Wall -Wextra -Werror -I $(LIBFT_DIR) -I $(B_INC_DIR)
+CFLAGS		=	-Wall -Wextra -I $(LIBFT_DIR) -I $(B_INC_DIR) #-Werror
 endif
 
-DFLAGS		=	-g3 -fsanitize=thread
+DFLAGS		=	-g3 -fsanitize=address
 
 #--debug & define flags--------------------------------------------------------#
 
