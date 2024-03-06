@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/06 17:05:17 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:43:35 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,27 @@ static void	set_fd(t_pipe *pipex, int cmd_no)
 	// printf("fds set. in: %d out: %d\n", pipex->fd[2], pipex->fd[3]);
 }
 
+static void	create_heredoc(t_pipe *pipex, t_redir *redir)
+{
+	char	*line;
+	char	*limiter;
+
+	pipex->fd[2] = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0777);
+	if (pipex->fd[2] < 0)
+		joint_error_msg("here_doc");
+	line = get_next_line(0);
+	limiter = ft_strjoin(redir->file, "\n");
+	while (line && ft_strcmp(line, limiter) != 0)
+	{
+		write(pipex->fd[2], line, ft_strlen(line));
+		free(line);
+		line = get_next_line(0);
+	}
+	free(line);
+	free(limiter);
+	close(pipex->fd[2]);
+}
+
 static void redirect(t_pipe *pipex, t_block *cmd_lst)
 {
 	while (cmd_lst->redir)
@@ -95,8 +116,13 @@ static void redirect(t_pipe *pipex, t_block *cmd_lst)
 			close(pipex->fd[3]);
 			pipex->fd[3] = open(cmd_lst->redir->file, O_CREAT | O_RDWR | O_APPEND, 0644);
 		}
-		// else if (cmd_lst->redir->type == REDIRECT_HEREDOC)
-		// 	read_heredoc();
+		else if (cmd_lst->redir->type == REDIRECT_HEREDOC)
+		{
+			if (pipex->fd[2] > 0)
+				close(pipex->fd[2]);
+			create_heredoc(pipex, cmd_lst->redir);
+			pipex->fd[2] = open("here_doc", O_RDONLY);
+		}
 		if (pipex->fd[2] == -1 || pipex->fd[2] == -1)
 		{
 			perror(NULL);

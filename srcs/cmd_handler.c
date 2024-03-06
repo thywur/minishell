@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/06 16:47:19 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:45:32 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,12 @@ int	main(int argc, char **argv, char **env)
 	redir1.file = "out.txt";
 	redir1.type = REDIRECT_OUT;
 	redir1.next = &redir1_1;
+	// redir1.next = NULL;
 	redir1_1.file = "srcs/cmd_handler.c";
 	redir1_1.type = REDIRECT_IN;
 	redir1_1.next = &redir1_2;
-	redir1_2.file = "srcs/cmd_parsing.c";
-	redir1_2.type = REDIRECT_IN;
+	redir1_2.file = "boop";
+	redir1_2.type = REDIRECT_HEREDOC;
 	redir1_2.next = NULL;
 	block1.next = NULL;
 	// block1.redir = NULL;

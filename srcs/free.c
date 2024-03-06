@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 17:01:53 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/05 12:07:40 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:24:54 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_struct(t_pipe *pipex)
 		i++;
 	}
 	// if (pipex->has_heredoc)
-	// 	unlink("here_doc");
+	unlink("here_doc");
 }
 
 void	free_and_exit(t_pipe *pipex, int exit_status)
