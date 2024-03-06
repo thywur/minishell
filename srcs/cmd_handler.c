@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/06 16:41:31 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:47:19 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ int	main(int argc, char **argv, char **env)
 	block1.cmd = "cat";
 	block1.args = ft_split("cat", " ");
 	block1.redir = &redir1;
-	redir1.file = "Makefile";
-	redir1.type = REDIRECT_IN;
+	redir1.file = "out.txt";
+	redir1.type = REDIRECT_OUT;
 	redir1.next = &redir1_1;
 	redir1_1.file = "srcs/cmd_handler.c";
 	redir1_1.type = REDIRECT_IN;
