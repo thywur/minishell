@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/06 17:48:46 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:38:46 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,28 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include <fcntl.h>
-# include <errno.h>
-# include <stdio.h>				// a virer
-// # include <unistd.h>
-// # include <stdlib.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 // # include <sys/types.h>
 # include <sys/wait.h>
+# include <unistd.h>
+# include <stdlib.h>
 # include <stdarg.h>
 # include <string.h>
 # include <limits.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <stdio.h>	 // !! a virer !!
+
+# define WORD 1
+# define PIPE 2
 
 # define REDIRECT_IN 1
 # define REDIRECT_OUT 2
 # define REDIRECT_APPEND 3
 # define REDIRECT_HEREDOC 4
+
+# define UNCLOSED_QUOTE 1
 
 typedef struct s_pipe
 {
@@ -58,6 +65,21 @@ typedef struct	s_block
 	struct s_block	*next;
 }	t_block;
 
+typedef struct s_token
+{
+	int				type;
+	int				error;
+	char			*data;
+	struct s_token	*next;
+}					t_token;
+
+typedef struct s_token_args
+{
+	int	inside_quotes;
+	int	last_pos;
+	int	pos;
+}		t_token_args;
+
 void	combine_paths(char **env, t_pipe *pipex, t_block *cmd_lst);
 void	free_struct(t_pipe *pipex);
 void	free_arr(char **arr);
@@ -69,5 +91,27 @@ void	joint_error_msg(char *err);
 void	fd_error(char *filename);
 int		ft_lstsize(t_block *lst);
 t_redir	*ft_lstlast(t_redir *lst);
+
+// -- STRING UTILS
+int		ft_strcmpr(char *s1, char *s2);
+int		ft_contains(char *str, char c);
+int		ft_startswith(char *big, char *little);
+int		is_not_empty(char *str, int size);
+
+// -- TOKEN UTILS
+void	print_tokens(t_token **tokens);
+t_token	*add_token(t_token *token);
+t_token	*create_empty_token();
+
+// -- MALLOC UTILS
+char	*ft_strdup_size(char *str, int size);
+void	free_linked_array(t_token **tokens);
+
+// -- UTILS
+void	print_error(char *error_descriptor);
+
+// -- TOKENS
+t_token	*save_token(t_token *token, char *cmdline, t_token_args *args);
+t_token	*split_cmdline_into_tokens(char *cmdline);
 
 #endif

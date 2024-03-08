@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
+#    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 19:17:58 by alermolo          #+#    #+#              #
-#    Updated: 2024/03/06 16:21:10 by alermolo         ###   ########.fr        #
+#    Updated: 2024/03/08 13:47:32 by quteriss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,13 +33,19 @@ SOURCES 	=		srcs/exec.c			\
 					srcs/free.c			\
 					srcs/cmd_handler.c		\
 					srcs/cmd_parsing.c		\
+					srcs/utils/utils_malloc.c \
+					srcs/utils/utils_string.c \
+					srcs/utils/utils_token.c \
+					srcs/utils/utils.c \
+					srcs/tokens/save_token.c \
+					srcs/tokens/cmdline_to_tokens.c \
 
 #--flags-----------------------------------------------------------------------#
 
 ifeq ($(BONUS), no)
-CFLAGS		=	-Wall -Wextra -g3  -I $(LIBFT_DIR) -I $(INC_DIR) #-Werror
+CFLAGS		=	-Wall -Wextra -lreadline -g3  -I $(LIBFT_DIR) -I $(INC_DIR) #-Werror
 else
-CFLAGS		=	-Wall -Wextra -I $(LIBFT_DIR) -I $(B_INC_DIR) #-Werror
+CFLAGS		=	-Wall -Wextra -lreadline -I $(LIBFT_DIR) -I $(B_INC_DIR) #-Werror
 endif
 
 DFLAGS		=	-g3 -fsanitize=address
