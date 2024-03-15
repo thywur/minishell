@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:53:11 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/08 13:36:12 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:58:48 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*ft_strdup_size(char *str, int size)
 	new_str = malloc(sizeof(char) * (size + 1));
 	if (!new_str)
 		return (NULL);
-
 	i = 0;
 	while (i < size && str[i])
 	{
@@ -46,4 +45,24 @@ void	free_linked_array(t_token **tokens)
 		elem = next;
 	}
 	*tokens = NULL;
+}
+
+void	ft_lst_delone(t_token **tokens, int index)
+{
+	t_token	*prev_elem;
+	t_token	*elem;
+	int		i;
+
+	i = 0;
+	elem = *tokens;
+	prev_elem = NULL;
+	while (i < index && elem)
+	{
+		prev_elem = elem;
+		elem = elem->next;
+		i++;
+	}
+	prev_elem->next = elem->next;
+	free(elem->data);
+	free(elem);
 }

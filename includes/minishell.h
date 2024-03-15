@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/08 13:38:46 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:59:57 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@
 # define REDIRECT_OUT 2
 # define REDIRECT_APPEND 3
 # define REDIRECT_HEREDOC 4
-
-# define UNCLOSED_QUOTE 1
 
 typedef struct s_pipe
 {
@@ -75,9 +73,9 @@ typedef struct s_token
 
 typedef struct s_token_args
 {
-	int	inside_quotes;
-	int	last_pos;
-	int	pos;
+	char	quote;
+	int		last_pos;
+	int		pos;
 }		t_token_args;
 
 void	combine_paths(char **env, t_pipe *pipex, t_block *cmd_lst);
@@ -97,15 +95,20 @@ int		ft_strcmpr(char *s1, char *s2);
 int		ft_contains(char *str, char c);
 int		ft_startswith(char *big, char *little);
 int		is_not_empty(char *str, int size);
+char	*ft_strtrim(char *s1, char *set);
+int		ft_strcpy(char *dst, const char *src);
+int		ft_secured_strlen(char *str);
 
 // -- TOKEN UTILS
 void	print_tokens(t_token **tokens);
 t_token	*add_token(t_token *token);
 t_token	*create_empty_token();
+void	trim_token_data(t_token *token);
 
 // -- MALLOC UTILS
 char	*ft_strdup_size(char *str, int size);
 void	free_linked_array(t_token **tokens);
+void	ft_lst_delone(t_token **tokens, int index);
 
 // -- UTILS
 void	print_error(char *error_descriptor);
@@ -113,5 +116,6 @@ void	print_error(char *error_descriptor);
 // -- TOKENS
 t_token	*save_token(t_token *token, char *cmdline, t_token_args *args);
 t_token	*split_cmdline_into_tokens(char *cmdline);
+t_token	**expand_tokens(t_token **tokens, char **env);
 
 #endif

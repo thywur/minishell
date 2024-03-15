@@ -6,7 +6,7 @@
 #    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 19:17:58 by alermolo          #+#    #+#              #
-#    Updated: 2024/03/08 13:47:32 by quteriss         ###   ########.fr        #
+#    Updated: 2024/03/15 14:04:02 by quteriss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,13 @@ SOURCES 	=		srcs/exec.c			\
 					srcs/cmd_parsing.c		\
 					srcs/utils/utils_malloc.c \
 					srcs/utils/utils_string.c \
+					srcs/utils/utils_string2.c \
 					srcs/utils/utils_token.c \
 					srcs/utils/utils.c \
 					srcs/tokens/save_token.c \
 					srcs/tokens/cmdline_to_tokens.c \
+					srcs/tokens/tokens_expansion.c \
+					main.c \
 
 #--flags-----------------------------------------------------------------------#
 

@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:05:16 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/08 13:40:19 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:59:19 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_error(char *error_descriptor)
 {
 	int	i;
-	
+
 	i = 0;
 	write(2, "minishell: ", 11);
 	while (error_descriptor[i])
