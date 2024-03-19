@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
+#    By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 19:17:58 by alermolo          #+#    #+#              #
-#    Updated: 2024/03/15 14:04:02 by quteriss         ###   ########.fr        #
+#    Updated: 2024/03/18 15:49:56 by quentinteri      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #--variables-------------------------------------------------------------------#
 
 NAME		=	minishell
-DEBUG		=	no
+DEBUG		=	yes
 BONUS		=	no
 
 #--includes & libraries--------------------------------------------------------#
@@ -41,6 +41,8 @@ SOURCES 	=		srcs/exec.c			\
 					srcs/tokens/save_token.c \
 					srcs/tokens/cmdline_to_tokens.c \
 					srcs/tokens/tokens_expansion.c \
+					srcs/blocks/join_tokens.c \
+					srcs/to_delete.c \
 					main.c \
 
 #--flags-----------------------------------------------------------------------#

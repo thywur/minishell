@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmdline_to_tokens.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:00:47 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/15 13:57:04 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:30:52 by quentinteri      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_token	*save_tokens(t_token *token, char *cmdline, t_token_args *args)
 	{
 		token = save_token(token, cmdline, args);
 		if (!token)
-			return (print_error("malloc creation error"), NULL);
+			return (print_error(MALLOC_ERROR), NULL);
 		if (cmdline[args->pos] == '\0')
 			break ;
 		args->pos++;
@@ -39,11 +39,11 @@ t_token	*split_cmdline_into_tokens(char *cmdline)
 	args.last_pos = 0;
 	token = create_empty_token();
 	if (!token)
-		return (print_error("malloc creation error"), NULL);
+		return (print_error(MALLOC_ERROR), NULL);
 	tokens = token;
 	token = save_tokens(token, cmdline, &args);
 	if (!token)
-		return (free_linked_array(&tokens), NULL);
+		return (free_tokens(&tokens), NULL);
 	token = tokens;
 	return (token);
 }

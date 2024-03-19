@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/15 13:59:57 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:44:18 by quentinteri      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@
 # include <errno.h>
 # include <stdio.h>	 // !! a virer !!
 
-# define WORD 1
-# define PIPE 2
+# define WORD 5
+# define PIPE 6
 
 # define REDIRECT_IN 1
 # define REDIRECT_OUT 2
 # define REDIRECT_APPEND 3
 # define REDIRECT_HEREDOC 4
+
+# define MALLOC_ERROR "malloc creation error"
 
 typedef struct s_pipe
 {
@@ -100,14 +102,13 @@ int		ft_strcpy(char *dst, const char *src);
 int		ft_secured_strlen(char *str);
 
 // -- TOKEN UTILS
-void	print_tokens(t_token **tokens);
 t_token	*add_token(t_token *token);
 t_token	*create_empty_token();
 void	trim_token_data(t_token *token);
 
 // -- MALLOC UTILS
 char	*ft_strdup_size(char *str, int size);
-void	free_linked_array(t_token **tokens);
+void	free_tokens(t_token **tokens);
 void	ft_lst_delone(t_token **tokens, int index);
 
 // -- UTILS
@@ -117,5 +118,12 @@ void	print_error(char *error_descriptor);
 t_token	*save_token(t_token *token, char *cmdline, t_token_args *args);
 t_token	*split_cmdline_into_tokens(char *cmdline);
 t_token	**expand_tokens(t_token **tokens, char **env);
+
+// -- BLOCKS
+t_block	*join_tokens_into_blocks(t_token **tokens);
+
+// -- TO DELETE !!!!
+void	print_tokens(t_token **tokens);
+void    print_blocks(t_block **blocks);
 
 #endif

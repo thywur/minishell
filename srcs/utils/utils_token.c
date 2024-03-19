@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:47:46 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/15 13:58:58 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:26:46 by quentinteri      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// A SUPPRIMER !!!!
-void	print_tokens(t_token **tokens)
-{
-	t_token	*elem;
-	int		i;
-
-	i = 1;
-	elem = *tokens;
-	while (elem)
-	{
-		printf("token%d (%p) { type:%d, data:%s, next:%p }\n", i, elem,
-			elem->type, elem->data, elem->next);
-		elem = elem->next;
-		i++;
-	}
-}
 
 t_token	*add_token(t_token *token)
 {

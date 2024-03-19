@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_malloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:53:11 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/15 13:58:48 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:30:27 by quentinteri      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strdup_size(char *str, int size)
 	return (new_str);
 }
 
-void	free_linked_array(t_token **tokens)
+void	free_tokens(t_token **tokens)
 {
 	t_token	*next;
 	t_token	*elem;
