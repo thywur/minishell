@@ -5,15 +5,16 @@
 #                                                     +:+ +:+         +:+      #
 #    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/03/08 19:17:58 by alermolo          #+#    #+#              #
-#    Updated: 2024/03/18 13:36:18 by alermolo         ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2024/03/19 13:03:18 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 #--variables-------------------------------------------------------------------#
 
 NAME		=	minishell
-DEBUG		=	no
+DEBUG		=	yes
 BONUS		=	no
 
 #--includes & libraries--------------------------------------------------------#
@@ -41,6 +42,8 @@ SOURCES 	=		srcs/exec/exec.c			\
 					srcs/tokens/save_token.c \
 					srcs/tokens/cmdline_to_tokens.c \
 					srcs/tokens/tokens_expansion.c \
+					srcs/blocks/join_tokens.c \
+					srcs/to_delete.c \
 					main.c \
 
 #--flags-----------------------------------------------------------------------#

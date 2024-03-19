@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/15 13:57:45 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:30:52 by quentinteri      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,10 @@ t_token	**expand_tokens(t_token **tokens, char **env)
 
 	err_status = format_tokens_data(tokens, env);
 	if (err_status == 1)
-		return (free_linked_array(tokens),
+		return (free_tokens(tokens),
 			print_error("syntax error near unexpected token"), NULL);
 	else if (err_status == 2)
-		return (free_linked_array(tokens),
-			print_error("malloc creation error"), NULL);
+		return (free_tokens(tokens),
+			print_error(MALLOC_ERROR), NULL);
 	return (tokens);
 }
