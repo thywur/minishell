@@ -6,13 +6,13 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:29:14 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/20 11:26:14 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:35:11 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_block	*new_empty_block()
+t_block	*new_empty_block(void)
 {
 	t_block	*block;
 
@@ -67,7 +67,7 @@ t_token	*create_block(t_block *block, t_token **tokens, int count)
 		{
 			redir = create_redir(token, token->next);
 			if (!redir)
-				return (print_error("malloc creation error"), NULL);
+				return (NULL);
 			ft_lstadd_back(&block->redir, redir);
 			token = token->next;
 		}
@@ -76,7 +76,7 @@ t_token	*create_block(t_block *block, t_token **tokens, int count)
 	token = save_block_args(block, count, tokens);
 	block->cmd = ft_strdup(block->args[0]);
 	if (!block->cmd)
-		return (print_error("malloc creation error"), NULL);
+		return (NULL);
 	return (token);
 }
 
@@ -85,11 +85,11 @@ t_block	*join_tokens_into_blocks(t_token **tokens)
 	t_block	*block;
 	t_token	*token;
 	t_block	*next;
-    t_block	*head;
+	t_block	*head;
 
 	block = new_empty_block();
 	if (!block)
-		return (print_error(MALLOC_ERROR), NULL);
+		return (NULL);
 	head = block;
 	token = *tokens;
 	while (token && token->next)
@@ -99,7 +99,7 @@ t_block	*join_tokens_into_blocks(t_token **tokens)
 			return (free_tokens(tokens), free_blocks(&head), NULL);
 		next = new_empty_block();
 		if (!next)
-			return (free_tokens(tokens), free_blocks(&head), print_error(MALLOC_ERROR), NULL);
+			return (free_tokens(tokens), free_blocks(&head), NULL);
 		block->next = next;
 		block = next;
 		token = token->next;

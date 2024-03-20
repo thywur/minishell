@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/19 14:25:32 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:34:33 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	main(int argc, char **argv, char **env)
 		tokens = split_cmdline_into_tokens(cmdline);
 		expand_tokens(&tokens, env);
 		blocks = join_tokens_into_blocks(&tokens);
+		if (!blocks)
+			return (print_error(MALLOC_ERROR), 1);
 		print_blocks(&blocks);
 		free_blocks(&blocks);
 	}

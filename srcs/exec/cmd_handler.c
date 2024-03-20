@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/14 13:18:34 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:32:28 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	cmd_handler(t_block *cmd_lst, char **env)
 	return (status);
 }
 
+/*
 int	main(int argc, char **argv, char **env)
 {
 	t_block	block1;
@@ -76,3 +77,4 @@ int	main(int argc, char **argv, char **env)
 	// free(block2.args);
 	return (0);
 }
+*/
