@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/06 17:43:35 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:57:09 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ static int	wait_for_children(t_pipe *pipex)
 
 static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char **env)
 {
-	// printf("all fds in: %d out: %d, pipe %d %d\n", pipex->fd[0], pipex->fd[1], pipex->fd[2], pipex->fd[3]);
-	// printf("executing child cmd: %s fd in: %d fd out: %d\n", cmd_lst->cmd, pipex->fd[2], pipex->fd[3]);
 	if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
 		free_and_exit(pipex, EXIT_FAILURE);
 	if (pipex->fd[0] != 0)
@@ -61,17 +59,11 @@ static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char **env)
 
 static void	set_fd(t_pipe *pipex, int cmd_no)
 {
-	// printf("setting fds. in: %d out: %d\n", pipex->fd[2], pipex->fd[3]);
-	// if (!cmd_lst->redir || (cmd_lst->redir && cmd_lst->redir->type != REDIRECT_OUT))
-	// {
-	// close(pipex->fd[1]);
 	pipex->fd[3] = pipex->fd[1];
 	if (cmd_no == pipex->cmd_count - 1)
 		pipex->fd[3] = STDOUT_FILENO;
-	// }
-	if (cmd_no == 0) // && (!cmd_lst->redir || (cmd_lst->redir && cmd_lst->redir->type != REDIRECT_IN)))
+	if (cmd_no == 0)
 		pipex->fd[2] = STDIN_FILENO;
-	// printf("fds set. in: %d out: %d\n", pipex->fd[2], pipex->fd[3]);
 }
 
 static void	create_heredoc(t_pipe *pipex, t_redir *redir)
@@ -99,7 +91,6 @@ static void redirect(t_pipe *pipex, t_block *cmd_lst)
 {
 	while (cmd_lst->redir)
 	{
-		// printf("pre redir fd in: %d fd out: %d\n", pipex->fd[2], pipex->fd[3]);
 		if (cmd_lst->redir->type == REDIRECT_IN)
 		{
 			if (pipex->fd[2] > 0)
@@ -128,8 +119,6 @@ static void redirect(t_pipe *pipex, t_block *cmd_lst)
 			perror(NULL);
 			free_and_exit(pipex, EXIT_FAILURE);
 		}
-		// printf("redir filename: %s\n", cmd_lst->redir->file);
-		// printf("post redir fd in: %d fd out: %d\n", pipex->fd[2], pipex->fd[3]);
 		cmd_lst->redir = cmd_lst->redir->next;
 	}
 }
@@ -143,7 +132,6 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char **env)
 	{
 		if (pipe(pipex->fd) == -1)
 			free_and_exit(pipex, EXIT_FAILURE);
-		// printf("pipe created. in: %d out: %d\n", pipex->fd[0], pipex->fd[1]);
 		set_fd(pipex, cmd_no);
 		if (cmd_lst->redir)
 			redirect(pipex, cmd_lst);

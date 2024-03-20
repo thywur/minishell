@@ -5,10 +5,11 @@
 #                                                     +:+ +:+         +:+      #
 #    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/03/08 19:17:58 by alermolo          #+#    #+#              #
-#    Updated: 2024/03/19 15:08:03 by quteriss         ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2024/03/20 11:30:44 by quteriss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 #--variables-------------------------------------------------------------------#
 
@@ -28,11 +29,11 @@ HEADERS 		=	includes/minishell.h
 SRC_DIR		=		srcs/
 B_SRC_DIR	=		bonus/srcs_bonus
 OBJ_DIR		=		.objects
-SOURCES 	=		srcs/exec.c			\
+SOURCES 	=		srcs/exec/exec.c			\
 					srcs/error.c		\
 					srcs/free.c			\
-					srcs/cmd_handler.c		\
-					srcs/cmd_parsing.c		\
+					srcs/exec/cmd_handler.c		\
+					srcs/exec/cmd_parsing.c		\
 					srcs/utils/utils_malloc.c \
 					srcs/utils/utils_string.c \
 					srcs/utils/utils_string2.c \

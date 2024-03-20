@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:46:35 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/05 12:29:59 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:56:06 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,8 @@ void	combine_paths(char **env, t_pipe *pipex, t_block *cmd_lst)
 	if (!pipex->paths)
 		free_and_exit(pipex, EXIT_FAILURE);
 	i = 0;
-	// if (pipex->in_fd < 0)
-	// {
-	// 	pipex->paths[0] = NULL;
-	// 	i = 1;
-	// }
 	while (i < pipex->cmd_count && cmd_lst)
 	{
-		// if (i == pipex->cmd_count - 1 && pipex->out_fd == -1)
-		// 	pipex->paths[i] = 0;
-		// else
 		pipex->paths[i] = cmd_path(env_paths, cmd_lst->cmd, 0);
 		cmd_lst = cmd_lst->next;
 		i++;
