@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   to_delete.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:02 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/18 15:45:47 by quentinteri      ###   ########.fr       */
+/*   Updated: 2024/03/20 11:26:44 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	print_tokens(t_token **tokens)
 void    print_blocks(t_block **blocks)
 {
 	t_block	*elem;
+	t_redir	*redir;
 	int		i;
 	int		j;
 
@@ -39,9 +40,19 @@ void    print_blocks(t_block **blocks)
 	while (elem->next)
 	{
 		printf("block%d (%p) { cmd:%s, args: ", i, elem, elem->cmd);
-		j = -1;
-		while (elem->args[++j])
-			printf("%s%c", elem->args[j], ' ' * (elem->args[j + 1] != NULL));
+		j = 0;
+		while (elem->args[j])
+		{
+			printf("%s%c", elem->args[j], ';' * (elem->args[j + 1] != NULL));
+			j++;
+		}
+		printf(", redir: ");
+		redir = elem->redir;
+		while (redir)
+		{
+			printf("%s(%d)%c", redir->file, redir->type, ';' * (redir->next != NULL));
+			redir = redir->next;
+		}
 		printf(", next: %p}\n", elem->next);
 		elem = elem->next;
 		i++;

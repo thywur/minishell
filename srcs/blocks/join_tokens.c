@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:29:14 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/18 15:51:33 by quentinteri      ###   ########.fr       */
+/*   Updated: 2024/03/20 11:26:14 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,101 +22,19 @@ t_block	*new_empty_block()
 	block->cmd = NULL;
 	block->args = NULL;
 	block->next = NULL;
+	block->redir = NULL;
 	return (block);
 }
 
-void	free_redir(t_redir **redir)
+t_token	*save_block_args(t_block *block, int count, t_token **tokens)
 {
-	t_redir	*next;
-	t_redir	*elem;
-
-	elem = *redir;
-	while (elem)
-	{
-		next = elem->next;
-		if (elem->file)
-			free(elem->file);
-		free(redir);
-		elem = next;
-	}
-	*redir = NULL;
-}
-
-void	free_blocks(t_block **blocks)
-{
-	t_block	*next;
-	t_block	*elem;
-	int		i;
-
-	elem = *blocks;
-	while (elem)
-	{
-		next = elem->next;
-		if (elem->cmd)
-			free(elem->cmd);
-		while (elem->args && elem->args[i])
-			free(elem->args[i++]);
-		if (elem->args)
-			free(elem->args);
-		free_redir(elem->redir);
-		free(elem);
-		elem = next;
-	}
-	*blocks = NULL;
-}
-
-t_redir	*create_redir(t_token *token)
-{
-	return (NULL);
-}
-
-t_token	*create_block(t_block *block, t_token **tokens)
-{
-	/*
-	
-	- stocker token->data dans block->cmd (strdup)
-	- head = *tokens
-	- parcourir depuis head tant que je ne suis pas sur un |
-		- si je suis sur un WORD
-			- count++
-		- sinon
-			- je récupère le token suivant et je le push_back dans block->redir
-			- je précise dans la redir le type de redirection (token->type)
-	- block->args = malloc(sizeof(char *) * (count + 1));
-	- je reparcours les token depuis head tant que je ne suis pas sur un |
-		- si je suis sur un WORD
-			- je l'ajoute a block->args
-		
-	*/
-
 	t_token	*token;
-	int		count;
 	int		j;
 
-	count = 1;
-	token = *tokens;
-	block->cmd = ft_strdup(token->data);
-	if (!block->cmd)
-		return (print_error(MALLOC_ERROR), NULL);
-	token = token->next;
-	while (token && token->next && token->type != PIPE)
-	{
-		if (token->type == WORD)
-			count++;
-		else if (token->type > 0 && token->type < 5)
-		{
-			block->redir = create_redir(token);
-			if (!block->redir)
-				return (print_error(MALLOC_ERROR), NULL);
-			token = token->next;
-		}
-		token = token->next;
-	}
+	j = 0;
 	block->args = malloc(sizeof(char *) * (count + 1));
 	if (!block->args)
-		return (print_error(MALLOC_ERROR), NULL);
-	block->args[count] = NULL;
-	j = 0;
+		return (print_error("malloc creation error"), NULL);
 	token = *tokens;
 	while (token && token->next && token->type != PIPE)
 	{
@@ -124,11 +42,41 @@ t_token	*create_block(t_block *block, t_token **tokens)
 		{
 			block->args[j] = ft_strdup(token->data);
 			if (!block->args[j])
-				return (print_error(MALLOC_ERROR), NULL);
+				return (print_error("malloc creation error"), NULL);
 			j++;
+		}
+		else
+			token = token->next;
+		token = token->next;
+	}
+	block->args[count] = NULL;
+	return (token);
+}
+
+t_token	*create_block(t_block *block, t_token **tokens, int count)
+{
+	t_token	*token;
+	t_redir	*redir;
+
+	token = *tokens;
+	while (token && token->next && token->type != PIPE)
+	{
+		if (token->type == WORD)
+			count++;
+		else if (token->type > 0 && token->type < 5)
+		{
+			redir = create_redir(token, token->next);
+			if (!redir)
+				return (print_error("malloc creation error"), NULL);
+			ft_lstadd_back(&block->redir, redir);
+			token = token->next;
 		}
 		token = token->next;
 	}
+	token = save_block_args(block, count, tokens);
+	block->cmd = ft_strdup(block->args[0]);
+	if (!block->cmd)
+		return (print_error("malloc creation error"), NULL);
 	return (token);
 }
 
@@ -136,6 +84,7 @@ t_block	*join_tokens_into_blocks(t_token **tokens)
 {
 	t_block	*block;
 	t_token	*token;
+	t_block	*next;
     t_block	*head;
 
 	block = new_empty_block();
@@ -143,14 +92,16 @@ t_block	*join_tokens_into_blocks(t_token **tokens)
 		return (print_error(MALLOC_ERROR), NULL);
 	head = block;
 	token = *tokens;
-	while (token->next)
+	while (token && token->next)
 	{
-		token = create_block(block, &token);
+		token = create_block(block, &token, 0);
 		if (!token)
 			return (free_tokens(tokens), free_blocks(&head), NULL);
-		block = new_empty_block();
-		if (!block)
+		next = new_empty_block();
+		if (!next)
 			return (free_tokens(tokens), free_blocks(&head), print_error(MALLOC_ERROR), NULL);
+		block->next = next;
+		block = next;
 		token = token->next;
 	}
 	block = head;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/18 15:44:18 by quentinteri      ###   ########.fr       */
+/*   Updated: 2024/03/19 15:06:56 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,19 @@ void	trim_token_data(t_token *token);
 
 // -- MALLOC UTILS
 char	*ft_strdup_size(char *str, int size);
-void	free_tokens(t_token **tokens);
 void	ft_lst_delone(t_token **tokens, int index);
+
+// -- REDIRECTIONS UTILS
+void	ft_lstadd_back(t_redir **lst, t_redir *new);
+t_redir	*create_redir(t_token *token, t_token *file_token);
 
 // -- UTILS
 void	print_error(char *error_descriptor);
+
+// -- FREE LINKED CHAINS
+void	free_tokens(t_token **tokens);
+void	free_blocks(t_block **blocks);
+void	free_redir(t_redir **redir);
 
 // -- TOKENS
 t_token	*save_token(t_token *token, char *cmdline, t_token_args *args);

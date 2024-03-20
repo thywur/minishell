@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/18 13:30:52 by quentinteri      ###   ########.fr       */
+/*   Updated: 2024/03/19 15:18:10 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,12 @@ int	get_final_data_size(char *data, char **env, int size)
 	return (size);
 }
 
-char	*expand_token(char *data, char **env, int size)
+char	*expand_token(char *data, char **env, int size, int i)
 {
 	char	quote;
 	char	*word;
-	int		i;
 	int		j;
 
-	i = 0;
 	j = 0;
 	quote = 0;
 	word = malloc(sizeof(char) * (size + 1));
@@ -95,32 +93,27 @@ char	*expand_token(char *data, char **env, int size)
 		i++;
 	}
 	word[size] = '\0';
+	free(data);
 	return (word);
 }
 
 int	format_tokens_data(t_token **tokens, char **env)
 {
-	t_token	*prev_token;
 	t_token	*token;
 	int		size;
 
 	token = *tokens;
-	prev_token = NULL;
 	while (token->next)
 	{
-		if (token->type != WORD && token->type != 0
-			&& (!prev_token || prev_token->type != WORD || !token->next))
-			return (1);
 		trim_token_data(token);
 		if (!token->data)
 			return (2);
 		size = get_final_data_size(token->data, env, 0);
 		if (size == -1)
 			return (2);
-		token->data = expand_token(token->data, env, size);
+		token->data = expand_token(token->data, env, size, 0);
 		if (!token->data)
 			return (2);
-		prev_token = token;
 		token = token->next;
 	}
 	return (0);

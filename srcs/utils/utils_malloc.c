@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_malloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:53:11 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/18 13:30:27 by quentinteri      ###   ########.fr       */
+/*   Updated: 2024/03/19 14:54:36 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,6 @@ char	*ft_strdup_size(char *str, int size)
 	}
 	new_str[i] = '\0';
 	return (new_str);
-}
-
-void	free_tokens(t_token **tokens)
-{
-	t_token	*next;
-	t_token	*elem;
-
-	elem = *tokens;
-	while (elem)
-	{
-		next = elem->next;
-		if (elem->data)
-			free(elem->data);
-		free(elem);
-		elem = next;
-	}
-	*tokens = NULL;
 }
 
 void	ft_lst_delone(t_token **tokens, int index)

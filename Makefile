@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+         #
+#    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 19:17:58 by alermolo          #+#    #+#              #
-#    Updated: 2024/03/18 15:49:56 by quentinteri      ###   ########.fr        #
+#    Updated: 2024/03/19 15:08:03 by quteriss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,8 @@ SOURCES 	=		srcs/exec.c			\
 					srcs/utils/utils_string.c \
 					srcs/utils/utils_string2.c \
 					srcs/utils/utils_token.c \
+					srcs/utils/utils_free.c \
+					srcs/utils/utils_redir.c \
 					srcs/utils/utils.c \
 					srcs/tokens/save_token.c \
 					srcs/tokens/cmdline_to_tokens.c \

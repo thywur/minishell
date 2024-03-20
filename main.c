@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentinterisse <quentinterisse@student.    +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/18 15:49:51 by quentinteri      ###   ########.fr       */
+/*   Updated: 2024/03/19 14:25:32 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ int	main(int argc, char **argv, char **env)
 		add_history(cmdline);
 		tokens = split_cmdline_into_tokens(cmdline);
 		expand_tokens(&tokens, env);
-		// print_tokens(&tokens);
-		// free_tokens(&tokens);
 		blocks = join_tokens_into_blocks(&tokens);
 		print_blocks(&blocks);
+		free_blocks(&blocks);
 	}
 }
