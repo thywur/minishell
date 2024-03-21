@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:51:45 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/19 13:16:37 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:54:36 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*ft_substr_gnl(char *s, unsigned int start, size_t len);
 void	*ft_bzero(void *s, size_t n);
 int		ft_isdigit(int c);
 int		ft_arrlen(char **arr);
+char	*ft_strstr(const char *big, const char *little);
 // int		ft_lstsize(t_block *lst);
 // t_redir	*ft_lstlast(t_redir *lst);
 

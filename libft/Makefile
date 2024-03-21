@@ -6,7 +6,7 @@
 #    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/08 16:11:24 by alermolo          #+#    #+#              #
-#    Updated: 2024/03/19 13:16:59 by alermolo         ###   ########.fr        #
+#    Updated: 2024/03/19 14:54:51 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS = 		ft_split.c	\
 			ft_lstsize.c	\
 			ft_lstlast.c	\
 			ft_arrlen.c	\
-			ft_isdigit.c
+			ft_isdigit.c	\
+			ft_strstr.c	\
 
 OBJ_DIR =	../.objects
 
