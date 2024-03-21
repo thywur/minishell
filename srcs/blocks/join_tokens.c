@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   join_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:29:14 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/20 11:35:11 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:14:47 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_block	*del_last(t_block **blocks)
+{
+	t_block	*block;
+	t_block	*last;
+
+	block = *blocks;
+	while (block->next->next)
+		block = block->next;
+	last = block->next;
+	block->next = NULL;
+	free_blocks(&last);
+	return (*blocks);
+}
 
 t_block	*new_empty_block(void)
 {
@@ -106,5 +120,5 @@ t_block	*join_tokens_into_blocks(t_token **tokens)
 	}
 	block = head;
 	free_tokens(tokens);
-	return (block);
+	return (del_last(&block));
 }

@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/12 16:57:09 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:00:24 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char **env)
 		pipex->pids[cmd_no] = fork();
 		if (pipex->pids[cmd_no] < 0)
 			free_and_exit(pipex, EXIT_FAILURE);
-
 		if (pipex->pids[cmd_no] == 0)
 			exec_child(pipex, cmd_lst, cmd_no, env);
 		if (pipex->fd[2] > 0)

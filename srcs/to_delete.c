@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   to_delete.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:02 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/20 11:26:44 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:13:21 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void    print_blocks(t_block **blocks)
 
 	i = 1;
 	elem = *blocks;
-	while (elem->next)
+	while (elem)
 	{
 		printf("block%d (%p) { cmd:%s, args: ", i, elem, elem->cmd);
 		j = 0;

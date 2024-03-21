@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/19 15:06:56 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:29:07 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ typedef struct s_token_args
 	int		pos;
 }		t_token_args;
 
+
+// -- EXECUTION
+int		cmd_handler(t_block **blocks, char **env);
 void	combine_paths(char **env, t_pipe *pipex, t_block *cmd_lst);
 void	free_struct(t_pipe *pipex);
 void	free_arr(char **arr);
@@ -89,8 +92,6 @@ int		exec_cmd(t_pipe *pipex, t_block *cmd_lst, char **env);
 void	err_msg(char *err);
 void	joint_error_msg(char *err);
 void	fd_error(char *filename);
-int		ft_lstsize(t_block *lst);
-t_redir	*ft_lstlast(t_redir *lst);
 
 // -- STRING UTILS
 int		ft_strcmpr(char *s1, char *s2);
@@ -116,6 +117,8 @@ t_redir	*create_redir(t_token *token, t_token *file_token);
 
 // -- UTILS
 void	print_error(char *error_descriptor);
+int		ft_lstsize(t_block *lst);
+t_redir	*ft_lstlast(t_redir *lst);
 
 // -- FREE LINKED CHAINS
 void	free_tokens(t_token **tokens);

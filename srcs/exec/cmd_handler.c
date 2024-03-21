@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/20 11:32:28 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:59:41 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,15 @@ static void	init_struct(t_pipe *pipex, t_block *cmd_lst)
 	pipex->fd[3] = -1;
 }
 
-int	cmd_handler(t_block *cmd_lst, char **env)
+int	cmd_handler(t_block **blocks, char **env)
 {
 	t_pipe	pipex;
 	int		status;
+	t_block	*cmd_lst;
 
+	if (!blocks)
+		return (EXIT_FAILURE);
+	cmd_lst = *blocks;
 	init_struct(&pipex, cmd_lst);
 	combine_paths(env, &pipex, cmd_lst);
 	status = exec_cmd(&pipex, cmd_lst, env);

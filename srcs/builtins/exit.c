@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:27:08 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/19 13:23:43 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:56:05 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	arg_is_numeric(char *str)
 	return (1);
 }
 
-int	ft_atoi_exit(char *str)
+static int	ft_atoi_exit(char *str)
 {
 	unsigned long long	nb;
 	int					sign;
