@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:09:10 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/23 16:34:59 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:14:14 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtin(char *cmd)
 {
 	if (!cmd)
-		return (-1);
+		return (0);
 	else if (!ft_strcmp(cmd, "echo"))
 		return (1);
 	else if (!ft_strcmp(cmd, "cd"))
@@ -31,7 +31,7 @@ int	is_builtin(char *cmd)
 	else if (!ft_strcmp(cmd, "exit"))
 		return (1);
 	else
-		return (-1);
+		return (0);
 }
 
 int	exec_builtin(int *fd, t_block *cmd_lst, t_pipe *pipex, char ***env)
@@ -39,6 +39,11 @@ int	exec_builtin(int *fd, t_block *cmd_lst, t_pipe *pipex, char ***env)
 	int		status;
 
 	status = 0;
+	if (!cmd_lst->next)
+	{
+		fd[2] = STDIN_FILENO;
+		fd[3] = STDOUT_FILENO;
+	}
 	if (!ft_strcmp(cmd_lst->cmd, "echo"))
 		status = ft_echo(cmd_lst->args, &fd[2]);
 	else if (!ft_strcmp(cmd_lst->cmd, "cd"))
