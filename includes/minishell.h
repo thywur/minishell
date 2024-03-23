@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/21 15:29:07 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:42:39 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,25 @@ typedef struct s_token_args
 
 
 // -- EXECUTION
-int		cmd_handler(t_block **blocks, char **env);
-void	combine_paths(char **env, t_pipe *pipex, t_block *cmd_lst);
-void	free_struct(t_pipe *pipex);
+int		cmd_handler(t_block **blocks, char ***env);
+void	combine_paths(char ***env, t_pipe *pipex, t_block *cmd_lst);
+void	free_pipex(t_pipe *pipex);
 void	free_arr(char **arr);
-void	free_and_exit(t_pipe *pipex, int exit_status);
-void	parse_cmds(int argc, char **argv, t_pipe *pipex);
-int		exec_cmd(t_pipe *pipex, t_block *cmd_lst, char **env);
+void	free_and_exit(t_pipe *pipex, t_block *blocks, char **env, int exit_status);
+// void	parse_cmds(int argc, char **argv, t_pipe *pipex);
+int		exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env);
 void	err_msg(char *err);
 void	joint_error_msg(char *err);
 void	fd_error(char *filename);
+
+// -- BUILTINS
+int		is_builtin(char *cmd);
+int		exec_builtin(int *fd, t_block *cmd_lst, t_pipe *pipex, char ***env);
+int		ft_echo(char **args, int fd[2]);
+int		ft_cd(char **args, char ***env);
+int		ft_env(char ***env, int fd[2]);
+int		ft_exit(char **args, t_block *cmd_lst, t_pipe *pipex, char ***env);
+int		ft_pwd(int fd[2]);
 
 // -- STRING UTILS
 int		ft_strcmpr(char *s1, char *s2);

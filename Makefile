@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
+#    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/03/20 11:30:44 by quteriss         ###   ########.fr        #
+#    Updated: 2024/03/22 15:23:51 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,12 @@ SOURCES 	=		srcs/exec/exec.c			\
 					srcs/free.c			\
 					srcs/exec/cmd_handler.c		\
 					srcs/exec/cmd_parsing.c		\
+					srcs/builtins/exec_builtin.c	\
+					srcs/builtins/cd.c	\
+					srcs/builtins/echo.c	\
+					srcs/builtins/env.c	\
+					srcs/builtins/exit.c	\
+					srcs/builtins/pwd.c	\
 					srcs/utils/utils_malloc.c \
 					srcs/utils/utils_string.c \
 					srcs/utils/utils_string2.c \

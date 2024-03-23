@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:46:35 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/21 16:15:52 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:48:57 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@
 // 	pipex->cmds[j] = 0;
 // }
 
-static char	**parse_paths(char **env)
+static char	**parse_paths(char ***env)
 {
 	char	**paths;
 	int		i;
 
 	i = 0;
 	paths = NULL;
-	while (env[i])
+	while ((*env)[i])
 	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-			paths = ft_split(&env[i][5], ":");
+		if (ft_strncmp((*env)[i], "PATH=", 5) == 0)
+			paths = ft_split(&(*env)[i][5], ":");
 		i++;
 	}
 	return (paths);
@@ -87,7 +87,7 @@ static char	*cmd_path(char **paths, char *cmd, int i)
 	return (NULL);
 }
 
-void	combine_paths(char **env, t_pipe *pipex, t_block *cmd_lst)
+void	combine_paths(char ***env, t_pipe *pipex, t_block *cmd_lst)
 {
 	char	**env_paths;
 	int		i;
@@ -95,7 +95,7 @@ void	combine_paths(char **env, t_pipe *pipex, t_block *cmd_lst)
 	env_paths = parse_paths(env);
 	pipex->paths = malloc(sizeof(char *) * (pipex->cmd_count + 1));
 	if (!pipex->paths)
-		free_and_exit(pipex, EXIT_FAILURE);
+		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	i = 0;
 	while (i < pipex->cmd_count && cmd_lst)
 	{

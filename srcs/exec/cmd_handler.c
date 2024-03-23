@@ -6,38 +6,43 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/21 16:59:41 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:35:26 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	init_struct(t_pipe *pipex, t_block *cmd_lst)
+static void	init_pipex(t_pipe *pipex, t_block *cmd_lst, char ***env)
 {
 	pipex->paths = NULL;
 	pipex->cmd_count = ft_lstsize(cmd_lst);
 	pipex->pids = malloc(sizeof(int) * pipex->cmd_count);
 	if (!pipex->pids)
-		free_and_exit(pipex, EXIT_FAILURE);
+		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	pipex->fd[0] = -1;
 	pipex->fd[1] = -1;
-	pipex->fd[2] = -1;
-	pipex->fd[3] = -1;
+	pipex->fd[2] = STDIN_FILENO;
+	pipex->fd[3] = STDOUT_FILENO;
 }
 
-int	cmd_handler(t_block **blocks, char **env)
+int	cmd_handler(t_block **blocks, char ***env)
 {
 	t_pipe	pipex;
 	int		status;
 	t_block	*cmd_lst;
+	// int		std_fd[4];
 
 	if (!blocks)
 		return (EXIT_FAILURE);
 	cmd_lst = *blocks;
-	init_struct(&pipex, cmd_lst);
+	// std_fd[2] = STDIN_FILENO;
+	// std_fd[3] = STDOUT_FILENO;
+	init_pipex(&pipex, cmd_lst, env);
+	if (is_builtin(cmd_lst->cmd) && !cmd_lst->next)
+		return (exec_builtin(pipex.fd, cmd_lst, &pipex, env));
 	combine_paths(env, &pipex, cmd_lst);
 	status = exec_cmd(&pipex, cmd_lst, env);
-	free_struct(&pipex);
+	free_pipex(&pipex);
 	return (status);
 }
 

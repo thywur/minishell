@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 17:01:53 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/06 17:24:54 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:22:19 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,36 @@ void	free_arr(char **arr)
 	int	i;
 
 	i = 0;
+	if (!arr)
+		return ;
 	while (arr[i])
-		free(arr[i++]);
+	{
+		if (arr[i])
+			free(arr[i]);
+		i++;
+	}
 	free(arr);
 }
 
-void	free_struct(t_pipe *pipex)
+void	free_pipex(t_pipe *pipex)
 {
 	int	i;
 
-	i = 0;
-	while (i < pipex->cmd_count)
-		free(pipex->paths[i++]);
-	free(pipex->paths);
+	if (pipex->paths)
+	{
+		i = 0;
+		while (i < pipex->cmd_count)
+		{
+			if (pipex->paths[i])
+				free(pipex->paths[i++]);
+		}
+		free(pipex->paths);
+	}
 	i = 0;
 	// while (pipex->cmds[i])
 	// 	free_arr(pipex->cmds[i++]);
 	// free(pipex->cmds);
+	// if (pipex->pids)
 	free(pipex->pids);
 	// if (pipex->in_fd > 0)
 	// 	close(pipex->in_fd);
@@ -50,8 +63,10 @@ void	free_struct(t_pipe *pipex)
 	unlink("here_doc");
 }
 
-void	free_and_exit(t_pipe *pipex, int exit_status)
+void	free_and_exit(t_pipe *pipex, t_block *blocks, char **env, int exit_status)
 {
-	free_struct(pipex);
+	free_pipex(pipex);
+	free_blocks(&blocks);
+	free_arr(env);
 	exit(exit_status);
 }

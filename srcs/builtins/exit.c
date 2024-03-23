@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:27:08 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/19 13:56:05 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:44:06 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	arg_is_numeric(char *str)
 	return (1);
 }
 
-static int	ft_atoi_exit(char *str)
+int	ft_atoi_exit(char *str)
 {
 	unsigned long long	nb;
 	int					sign;
@@ -59,23 +59,24 @@ static int	ft_atoi_exit(char *str)
 	return (res);
 }
 
-int	ft_exit(char **args)
+int	ft_exit(char **args, t_block *cmd_lst, t_pipe *pipex, char ***env)
 {
 	if (ft_arrlen(args) > 1)
 	{
-		if (!arg_is_numeric(args[1]) || ft_atoi_exit(args[1] == -1))
+		if (!arg_is_numeric(args[1]) || ft_atoi_exit(args[1]) == -1)
 		{
 			write(2, "exit\nminishell: exit: ", 22);
 			write(2, args[1], ft_strlen(args[1]));
 			write(2, ": numeric argument required\n", 28);
-			exit(2);
+			free_and_exit(pipex, cmd_lst, *env, 2);
 		}
 		else if (ft_arrlen(args) == 2)
-			exit(ft_atoi_exit(args[1]));
+			free_and_exit(pipex, cmd_lst, *env, ft_atoi_exit(args[1]));
 		if (ft_arrlen(args) > 2)
 			write(2, "exit\nminishell: exit: too many arguments\n", 41);
 		return (1);
 	}
-	exit(0);
+	// exit(0);
+	free_and_exit(pipex, cmd_lst, *env, 0);
 	return (0);
 }

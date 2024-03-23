@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/21 17:00:24 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:46:52 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@ static int	wait_for_children(t_pipe *pipex)
 	return (status);
 }
 
-static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char **env)
+static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char ***env)
 {
 	if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
-		free_and_exit(pipex, EXIT_FAILURE);
+		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	if (pipex->fd[0] != 0)
 		close(pipex->fd[0]);
 	if (dup2(pipex->fd[2], STDIN_FILENO) == -1)
 	{
 		perror(NULL);
-		free_and_exit(pipex, EXIT_FAILURE);
+		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	}
 	if (pipex->fd[2] != 0)
 		close(pipex->fd[2]);
 	if (dup2(pipex->fd[3], STDOUT_FILENO) == -1)
 	{
 		perror(NULL);
-		free_and_exit(pipex, EXIT_FAILURE);
+		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	}
 	if (pipex->fd[3] != 1)
 		close(pipex->fd[3]);
@@ -49,12 +49,12 @@ static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char **env)
 	{
 		close(STDIN_FILENO);
 		close(STDOUT_FILENO);
-		free_and_exit(pipex, 127);
+		free_and_exit(pipex, cmd_lst, *env, 127);
 	}
-	execve(pipex->paths[cmd_no], cmd_lst->args, env);
+	execve(pipex->paths[cmd_no], cmd_lst->args, *env);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
-	free_and_exit(pipex, EXIT_FAILURE);
+	free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 }
 
 static void	set_fd(t_pipe *pipex, int cmd_no)
@@ -87,7 +87,7 @@ static void	create_heredoc(t_pipe *pipex, t_redir *redir)
 	close(pipex->fd[2]);
 }
 
-static void redirect(t_pipe *pipex, t_block *cmd_lst)
+static void redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 {
 	while (cmd_lst->redir)
 	{
@@ -117,13 +117,13 @@ static void redirect(t_pipe *pipex, t_block *cmd_lst)
 		if (pipex->fd[2] == -1 || pipex->fd[2] == -1)
 		{
 			perror(NULL);
-			free_and_exit(pipex, EXIT_FAILURE);
+			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 		}
 		cmd_lst->redir = cmd_lst->redir->next;
 	}
 }
 
-int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char **env)
+int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 {
 	int cmd_no;
 
@@ -131,13 +131,13 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char **env)
 	while (cmd_no < pipex->cmd_count && cmd_lst)
 	{
 		if (pipe(pipex->fd) == -1)
-			free_and_exit(pipex, EXIT_FAILURE);
+			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 		set_fd(pipex, cmd_no);
 		if (cmd_lst->redir)
-			redirect(pipex, cmd_lst);
+			redirect(pipex, cmd_lst, env);
 		pipex->pids[cmd_no] = fork();
 		if (pipex->pids[cmd_no] < 0)
-			free_and_exit(pipex, EXIT_FAILURE);
+			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 		if (pipex->pids[cmd_no] == 0)
 			exec_child(pipex, cmd_lst, cmd_no, env);
 		if (pipex->fd[2] > 0)

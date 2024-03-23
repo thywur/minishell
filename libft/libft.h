@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:51:45 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/19 14:54:36 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:20:19 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin_free(char const *s1, char const *s2);
+char	*ft_strjoin_free2(char const *s1, char const *s2);
 char	*get_next_line(int fd);
 void	*free_and_null(char *s);
 char	*ft_strdup(const char *s);

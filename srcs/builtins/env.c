@@ -6,20 +6,20 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:19:04 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/14 16:21:57 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:04:08 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_env(char **env, int fd[2])
+int	ft_env(char ***env, int fd[2])
 {
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while ((*env)[i])
 	{
-		write(fd[1], env[i], ft_strlen(env[i]));
+		write(fd[1], (*env)[i], ft_strlen((*env)[i]));
 		write(fd[1], "\n", 1);
 		i++;
 	}
