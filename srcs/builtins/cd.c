@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:31:02 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/23 15:21:13 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:15:51 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,16 @@ int	cd_path(char *path, char ***env)
 		return (1);
 	if (del_from_env("PWD", env) == -1)
 		return (1);
-	if (add_to_env(ft_strjoin("PWD=", path), env) == -1)
+	if (path && ((path[0] == '.' && path[1] == '\0')
+		|| (path[0] == '.' && path[1] == '.' && path[2] == '\0')))
+	{
+		oldpwd = getcwd(NULL, 0);
+		if (!oldpwd)
+			return (perror("minishell"), 1);
+		if (add_to_env(ft_strjoin_free2("PWD=", oldpwd), env) == -1)
+			return (1);
+	}
+	else if (add_to_env(ft_strjoin("PWD=", path), env) == -1)
 		return (1);
 	return (0);
 }
