@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/23 15:46:52 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:09:47 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ static int	wait_for_children(t_pipe *pipex)
 	int	status;
 
 	i = 0;
+	status = 0;
 	while (i < pipex->cmd_count)
-		waitpid(pipex->pids[i++], &status, 0);
+	{
+		waitpid(pipex->pids[i], &status, 0);
+		i++;
+	}
 	if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
 	return (status);
@@ -138,7 +142,7 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		pipex->pids[cmd_no] = fork();
 		if (pipex->pids[cmd_no] < 0)
 			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
-		if (pipex->pids[cmd_no] == 0)
+		if (pipex->pids[cmd_no] == 0 && pipex->paths[cmd_no])
 			exec_child(pipex, cmd_lst, cmd_no, env);
 		if (pipex->fd[2] > 0)
 			close(pipex->fd[2]);

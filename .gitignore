@@ -1,2 +1,7 @@
 .objects
 .vscode
+exec_shit.c
+minishell
+backup
+libft.a
+.gitignore

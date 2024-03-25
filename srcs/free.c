@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 17:01:53 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/23 16:22:19 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:07:27 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	free_pipex(t_pipe *pipex)
 		while (i < pipex->cmd_count)
 		{
 			if (pipex->paths[i])
-				free(pipex->paths[i++]);
+				free(pipex->paths[i]);
+			i++;
 		}
 		free(pipex->paths);
 	}

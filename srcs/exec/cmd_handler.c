@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/23 16:35:26 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:08:32 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	init_pipex(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	pipex->fd[0] = -1;
 	pipex->fd[1] = -1;
-	pipex->fd[2] = STDIN_FILENO;
-	pipex->fd[3] = STDOUT_FILENO;
+	pipex->fd[2] = -1;
+	pipex->fd[3] = -1;
 }
 
 int	cmd_handler(t_block **blocks, char ***env)
