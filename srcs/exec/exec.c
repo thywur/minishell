@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/25 14:09:47 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:16:38 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ static int	wait_for_children(t_pipe *pipex)
 	status = 0;
 	while (i < pipex->cmd_count)
 	{
+		dprintf(2, "waiting for pid %d\n", pipex->pids[i]);
 		waitpid(pipex->pids[i], &status, 0);
+		dprintf(2, "pid %d exited with status %d\n", pipex->pids[i], status);
 		i++;
 	}
 	if (WIFEXITED(status))
@@ -139,16 +141,19 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		set_fd(pipex, cmd_no);
 		if (cmd_lst->redir)
 			redirect(pipex, cmd_lst, env);
-		pipex->pids[cmd_no] = fork();
-		if (pipex->pids[cmd_no] < 0)
-			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
-		if (pipex->pids[cmd_no] == 0 && pipex->paths[cmd_no])
-			exec_child(pipex, cmd_lst, cmd_no, env);
-		if (pipex->fd[2] > 0)
-			close(pipex->fd[2]);
-		if (pipex->fd[3] > 0)
-			close(pipex->fd[3]);
-		pipex->fd[2] = pipex->fd[0];
+		if (pipex->paths[cmd_no])
+		{
+			pipex->pids[cmd_no] = fork();
+			if (pipex->pids[cmd_no] < 0)
+				free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
+			if (pipex->pids[cmd_no] == 0 && pipex->paths[cmd_no])
+				exec_child(pipex, cmd_lst, cmd_no, env);
+			if (pipex->fd[2] > 0)
+				close(pipex->fd[2]);
+			if (pipex->fd[3] > 0)
+				close(pipex->fd[3]);
+			pipex->fd[2] = pipex->fd[0];
+		}
 		cmd_lst = cmd_lst->next;
 		cmd_no++;
 	}
