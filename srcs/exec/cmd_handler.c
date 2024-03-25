@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/25 14:08:32 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:12:00 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int	cmd_handler(t_block **blocks, char ***env)
 	// std_fd[3] = STDOUT_FILENO;
 	init_pipex(&pipex, cmd_lst, env);
 	if (is_builtin(cmd_lst->cmd) && !cmd_lst->next)
-		return (exec_builtin(pipex.fd, cmd_lst, &pipex, env));
+	{
+		status = exec_builtin(pipex.fd, cmd_lst, &pipex, env);
+		free_pipex(&pipex);
+		return (status);
+	}
 	combine_paths(env, &pipex, cmd_lst);
 	status = exec_cmd(&pipex, cmd_lst, env);
 	free_pipex(&pipex);

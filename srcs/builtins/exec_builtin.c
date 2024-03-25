@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:09:10 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/23 18:14:14 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:55:28 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	exec_builtin(int *fd, t_block *cmd_lst, t_pipe *pipex, char ***env)
 	int		status;
 
 	status = 0;
-	if (!cmd_lst->next)
-	{
+	// if (!cmd_lst->next)
+	// {
 		fd[2] = STDIN_FILENO;
 		fd[3] = STDOUT_FILENO;
-	}
+	// }
 	if (!ft_strcmp(cmd_lst->cmd, "echo"))
 		status = ft_echo(cmd_lst->args, &fd[2]);
 	else if (!ft_strcmp(cmd_lst->cmd, "cd"))
@@ -58,6 +58,6 @@ int	exec_builtin(int *fd, t_block *cmd_lst, t_pipe *pipex, char ***env)
 		status = ft_env(env, &fd[2]);
 	else if (!ft_strcmp(cmd_lst->cmd, "exit"))
 		status = ft_exit(cmd_lst->args, cmd_lst, pipex, env);
-	free_pipex(pipex);
+	// free_pipex(pipex);
 	return (status);
 }
