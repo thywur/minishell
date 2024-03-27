@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/25 15:39:37 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/27 13:18:57 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **env)
 		blocks = join_tokens_into_blocks(&tokens);
 		if (!blocks)
 			return (print_error(MALLOC_ERROR), 1);
-		print_blocks(&blocks);
+		// print_blocks(&blocks);
 		saved_stdin = dup(STDIN_FILENO);		// trouver un autre moyen de les stocker et de les close
 		saved_stdout = dup(STDOUT_FILENO);
 		cmd_handler(&blocks, &env);

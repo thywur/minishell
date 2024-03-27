@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:29:14 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/21 16:14:47 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/27 13:42:04 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@ t_block	*del_last(t_block **blocks)
 	t_block	*last;
 
 	block = *blocks;
-	while (block->next->next)
+	while (block && block->next && block->next->next)
 		block = block->next;
-	last = block->next;
-	block->next = NULL;
-	free_blocks(&last);
+	if (block)
+	{
+		last = block->next;
+		block->next = NULL;
+		free_blocks(&last);
+	}
 	return (*blocks);
 }
 

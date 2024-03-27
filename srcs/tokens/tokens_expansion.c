@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/19 15:18:10 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/27 13:46:01 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	format_tokens_data(t_token **tokens, char **env)
 	int		size;
 
 	token = *tokens;
-	while (token->next)
+	while (token && token->next)
 	{
 		trim_token_data(token);
 		if (!token->data)
