@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/23 15:42:39 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:37:37 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,15 @@ int		ft_cd(char **args, char ***env);
 int		ft_env(char ***env, int fd[2]);
 int		ft_exit(char **args, t_block *cmd_lst, t_pipe *pipex, char ***env);
 int		ft_pwd(int fd[2]);
+int		ft_export(char **args, char ***env, int fd[2]);
+int		ft_unset(char **args, char ***env);
+
+// -- BUILTIN UTILS
+int		add_to_env_free(char *str, char ***env);
+int		del_from_env(char *str, char ***env);
+int		is_in_env(char *s, char **env);
+int		replace_in_env(char *str, char ***env);
+char   **sort_env(char **env);
 
 // -- STRING UTILS
 int		ft_strcmpr(char *s1, char *s2);
@@ -126,8 +135,8 @@ t_redir	*create_redir(t_token *token, t_token *file_token);
 
 // -- UTILS
 void	print_error(char *error_descriptor);
-int		ft_lstsize(t_block *lst);
-t_redir	*ft_lstlast(t_redir *lst);
+// int		ft_lstsize(t_block *lst);
+// t_redir	*ft_lstlast(t_redir *lst);
 
 // -- FREE LINKED CHAINS
 void	free_tokens(t_token **tokens);
