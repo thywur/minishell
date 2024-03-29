@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:53:33 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/19 14:57:07 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:53:43 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_single_redir(t_redir **redir)
+{
+	t_redir	*tmp;
+
+	tmp = (*redir)->next;
+	if ((*redir)->file)
+		free((*redir)->file);
+	free(*redir);
+	*redir = tmp;
+}
 
 void	free_redir(t_redir **redir)
 {

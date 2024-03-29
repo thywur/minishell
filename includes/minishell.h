@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/29 13:59:10 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:11:06 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int		exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env);
 void	err_msg(char *err);
 void	joint_error_msg(char *err);
 void	fd_error(char *filename);
+void 	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env);
 
 // -- BUILTINS
 int		is_builtin(char *cmd);
@@ -143,6 +144,7 @@ t_redir	*ft_lstlast(t_redir *lst);
 void	free_tokens(t_token **tokens);
 void	free_blocks(t_block **blocks);
 void	free_redir(t_redir **redir);
+void	free_single_redir(t_redir **redir);
 
 // -- TOKENS
 t_token	*save_token(t_token *token, char *cmdline, t_token_args *args);
