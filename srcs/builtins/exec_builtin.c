@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:09:10 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/25 15:55:28 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:43:46 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	exec_builtin(int *fd, t_block *cmd_lst, t_pipe *pipex, char ***env)
 		status = ft_cd(cmd_lst->args, env);
 	else if (!ft_strcmp(cmd_lst->cmd, "pwd"))
 		status = ft_pwd(&fd[2]);
-	// else if (!ft_strcmp(cmd_lst->cmd, "export"))
-	// 	status = ft_export(cmd_lst->args, env);
-	// else if (!ft_strcmp(cmd_lst->cmd, "unset"))
-	// 	status = ft_unset(cmd_lst->args, env);
+	else if (!ft_strcmp(cmd_lst->cmd, "export"))
+		status = ft_export(cmd_lst->args, env, &fd[2]);
+	else if (!ft_strcmp(cmd_lst->cmd, "unset"))
+		status = ft_unset(cmd_lst->args, env);
 	else if (!ft_strcmp(cmd_lst->cmd, "env"))
 		status = ft_env(env, &fd[2]);
 	else if (!ft_strcmp(cmd_lst->cmd, "exit"))

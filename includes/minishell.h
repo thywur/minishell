@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/29 12:49:42 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:59:10 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int		del_from_env(char *str, char ***env);
 int		is_in_env(char *s, char **env);
 int		replace_in_env(char *str, char ***env);
 char   **sort_env(char **env);
+char	**search_env(char *str, char **env);
 
 // -- STRING UTILS
 int		ft_strcmpr(char *s1, char *s2);
