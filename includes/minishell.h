@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/29 12:37:37 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:49:42 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ t_redir	*create_redir(t_token *token, t_token *file_token);
 
 // -- UTILS
 void	print_error(char *error_descriptor);
-// int		ft_lstsize(t_block *lst);
-// t_redir	*ft_lstlast(t_redir *lst);
+int		ft_lstsize(t_block *lst);
+t_redir	*ft_lstlast(t_redir *lst);
 
 // -- FREE LINKED CHAINS
 void	free_tokens(t_token **tokens);

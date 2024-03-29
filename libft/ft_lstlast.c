@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-// #include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
-t_list	*ft_lstlast(t_list *lst)
+t_redir	*ft_lstlast(t_redir *lst)
 {
 	if (lst == NULL)
 		return (lst);

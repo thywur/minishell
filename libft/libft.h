@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:51:45 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/29 12:38:39 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:49:37 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		ft_arrlen(char **arr);
 char	*ft_strstr(const char *big, const char *little);
 char	*ft_strchr(const char *s, int c);
 int		ft_strchr_pos(const char *s, int c);
-int		ft_lstsize(t_list *lst);
-t_list	*ft_lstlast(t_list *lst);
+// int		ft_lstsize(t_list *lst);
+// t_list	*ft_lstlast(t_list *lst);
 
 #endif
