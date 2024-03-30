@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:11:48 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:31:31 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ typedef struct s_token_args
 	int		last_pos;
 	int		pos;
 }		t_token_args;
-
-// int	last_signal;
 
 // -- EXECUTION
 int		cmd_handler(t_block **blocks, char ***env);
@@ -154,9 +152,12 @@ t_block	*join_tokens_into_blocks(t_token **tokens);
 
 // -- SIGNALS
 void	signal_hub(char mod);
+void	handle_sigchild(int signal);
 
 // -- TO DELETE !!!!
 void	print_tokens(t_token **tokens);
 void	print_blocks(t_block **blocks);
+
+// extern int	last_signal;
 
 #endif

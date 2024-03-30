@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
+#    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/03/30 15:47:47 by alermolo         ###   ########.fr        #
+#    Updated: 2024/03/30 16:20:53 by quteriss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #--variables-------------------------------------------------------------------#
 
 NAME		=	minishell
-DEBUG		=	yes
+DEBUG		=	no
 BONUS		=	no
 
 #--includes & libraries--------------------------------------------------------#

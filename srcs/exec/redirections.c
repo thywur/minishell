@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:07:04 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:13:19 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	create_heredoc(t_pipe *pipex, t_redir *redir)
 	write(2, "> ", 2);
 	line = get_next_line(0);
 	limiter = ft_strjoin(redir->file, "\n");
+	signal_hub(3);
 	while (line && ft_strcmp(line, limiter) != 0)
 	{
 		write(2, "> ", 2);

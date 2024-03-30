@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:00:34 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:18:54 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	path_not_found(t_pipe *pipex, t_block *cmd_lst, char ***env)
 
 static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char ***env)
 {
+	signal_hub(2);
 	if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
 		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	if (pipex->fd[0] != 0)
@@ -93,6 +94,7 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		set_fd(pipex, cmd_no);
 		if (cmd_lst->redir)
 			redirect(pipex, cmd_lst, env);
+		signal(SIGINT, SIG_IGN);
 		pipex->pids[cmd_no] = fork();
 		if (pipex->pids[cmd_no] < 0)
 			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
@@ -102,6 +104,7 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 			close(pipex->fd[2]);
 		if (pipex->fd[3] > 0)
 			close(pipex->fd[3]);
+		signal(SIGCHLD, handle_sigchild);
 		pipex->fd[2] = pipex->fd[0];
 		cmd_lst = cmd_lst->next;
 		cmd_no++;

@@ -6,11 +6,23 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:14:56 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/30 15:57:54 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:26:37 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_sigchild(int signal)
+{
+	(void)signal;
+	if (last_signal == 2)
+	{
+		last_signal = 0;
+		write(1, "\n", 1);
+	}
+	if (last_signal == 3)
+		write(1, "Quit (core dumped)\n", 19);
+}
 
 void	sigint_handler(int signal)
 {
@@ -20,13 +32,14 @@ void	sigint_handler(int signal)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
-	// last_signal = signal;
+	last_signal = signal;
 }
 
 void	signal_handler(int signal)
 {
 	sigint_handler(signal);
-	rl_redisplay();
+	if (signal == SIGINT)
+		rl_redisplay();
 }
 
 void	signal_exec_handler(int signal)
