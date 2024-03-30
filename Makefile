@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
+#    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/03/30 14:34:33 by quteriss         ###   ########.fr        #
+#    Updated: 2024/03/30 15:47:47 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,12 @@ HEADERS 		=	includes/minishell.h
 SRC_DIR		=		srcs/
 B_SRC_DIR	=		bonus/srcs_bonus
 OBJ_DIR		=		.objects
-SOURCES 	=		srcs/exec/exec.c			\
-					srcs/error.c		\
+SOURCES 	=		srcs/error.c		\
 					srcs/free.c			\
 					srcs/exec/cmd_handler.c		\
 					srcs/exec/cmd_parsing.c		\
+					srcs/exec/exec.c			\
+					srcs/exec/redirections.c	\
 					srcs/builtins/exec_builtin.c	\
 					srcs/builtins/builtin_utils.c	\
 					srcs/builtins/cd.c	\
