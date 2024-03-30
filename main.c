@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 15:10:34 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/30 14:33:39 by quteriss         ###   ########.fr       */
+/*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
+/*   Updated: 2024/03/30 16:11:04 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,22 @@ int	main(int argc, char **argv, char **env)
 
 	// last_signal = 0;
 	exit_status = 0;
-	signal(SIGINT, signal_handler);
 
 	while (42)
 	{
+		signal_hub(1);
+
 		cmdline = readline(">>> ");
+		if (!cmdline)
+			return (1);
+
+		if (ft_strlen(cmdline) == 0)	
+			continue ;
 		add_history(cmdline);
 
 		tokens = split_cmdline_into_tokens(cmdline);
+		if (!tokens)
+			continue ;
 		exit_status = expand_tokens(&tokens, env, exit_status);
 		if (exit_status == 4)
 		{

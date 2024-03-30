@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 14:34:45 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:39:55 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int		expand_tokens(t_token **tokens, char **env, int exit_status);
 t_block	*join_tokens_into_blocks(t_token **tokens);
 
 // -- SIGNALS
-void	signal_handler(int signal);
+void	signal_hub(char mod);
 
 // -- TO DELETE !!!!
 void	print_tokens(t_token **tokens);
