@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
+#    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/03/25 15:34:45 by alermolo         ###   ########.fr        #
+#    Updated: 2024/03/28 14:25:45 by quteriss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,10 +47,12 @@ SOURCES 	=		srcs/exec/exec.c			\
 					srcs/utils/utils_free.c \
 					srcs/utils/utils_redir.c \
 					srcs/utils/utils.c \
+					srcs/tokens/check_tokens.c \
 					srcs/tokens/save_token.c \
 					srcs/tokens/cmdline_to_tokens.c \
 					srcs/tokens/tokens_expansion.c \
 					srcs/blocks/join_tokens.c \
+					srcs/signals/signals.c \
 					srcs/to_delete.c \
 					main.c \
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:51:45 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/23 15:20:19 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:25:17 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	*ft_bzero(void *s, size_t n);
 int		ft_isdigit(int c);
 int		ft_arrlen(char **arr);
 char	*ft_strstr(const char *big, const char *little);
+char	*ft_itoa(int n);
 // int		ft_lstsize(t_block *lst);
 // t_redir	*ft_lstlast(t_redir *lst);
 

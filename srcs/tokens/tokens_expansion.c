@@ -6,43 +6,55 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/27 13:46:01 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:04:16 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_variable(char *data, char **env, int *i)
+void	store_field(char **env, char *word, char **field)
 {
-	char	*_word;
-	char	*word;
-	int		j;
 	int		k;
 
-	j = 0;
-	while (data[j] && !ft_contains(" \t\'\"", data[j]))
-		j++;
-	_word = ft_substr(data, 1, j - 1);
-	if (!_word)
-		return (NULL);
-	word = ft_strjoin(_word, "=");
-	free(_word);
-	if (!word)
-		return (NULL);
 	k = 0;
 	while (env[k] && !ft_startswith(env[k], word))
 		k++;
-	*i += j - 1;
 	if (env[k])
-		_word = env[k] + ft_strlen(word);
+		*field = env[k] + ft_strlen(word);
 	else
-		_word = env[0] + ft_strlen(env[0]);
-	free(word);
-	return (_word);
+		*field = env[0] + ft_strlen(env[0]);
 }
 
-int	get_final_data_size(char *data, char **env, int size)
+char	*expand_variable(char *data, char **env, int *i, int exit_status)
 {
+	char	*field;
+	char	*word;
+	int		j;
+
+	j = 0;
+	while (data[j] && !ft_contains(" \t\'\"", data[j])
+		&& !(j != 0 && data[j] == '$'))
+		j++;
+	field = ft_substr(data, 1, j - 1);
+	if (!field)
+		return (NULL);
+	if (!ft_strcmpr(field, "?"))
+	{
+		*i += 1;
+		return (ft_itoa(exit_status));
+	}
+	word = ft_strjoin(field, "=");
+	free(field);
+	if (!word)
+		return (NULL);
+	store_field(env, word, &field);
+	*i += j - 1;
+	return (ft_strdup(field));
+}
+
+int	get_final_data_size(char *data, char **env, int size, int exit_status)
+{
+	char	*field;
 	char	quote;
 	int		i;
 	int		k;
@@ -53,7 +65,9 @@ int	get_final_data_size(char *data, char **env, int size)
 	{
 		if (data[i] == '$' && quote != '\'')
 		{
-			k = ft_secured_strlen(expand_variable(data + i, env, &i));
+			field = expand_variable(data + i, env, &i, exit_status);
+			k = ft_secured_strlen(field);
+			free(field);
 			if (k == -1)
 				return (k);
 			size += k;
@@ -69,35 +83,41 @@ int	get_final_data_size(char *data, char **env, int size)
 	return (size);
 }
 
-char	*expand_token(char *data, char **env, int size, int i)
+char	*expand_token(char *data, char **env, int size, int exit_status)
 {
+	char	*field;
 	char	quote;
 	char	*word;
 	int		j;
+	int		i;
 
+	i = -1;
 	j = 0;
 	quote = 0;
 	word = malloc(sizeof(char) * (size + 1));
 	if (!word)
 		return (NULL);
-	while (data[i])
+	while (data[++i])
 	{
 		if (data[i] == '$' && quote != '\'')
-			j += ft_strcpy(word + j, expand_variable(data + i, env, &i));
+		{
+			field = expand_variable(data + i, env, &i, exit_status);
+			j += ft_strcpy(word + j, field);
+			free(field);
+		}
 		else if (!quote && ft_contains("\"'", data[i]))
 			quote = data[i];
 		else if (quote && quote == data[i])
 			quote = 0;
 		else
 			word[j++] = data[i];
-		i++;
 	}
 	word[size] = '\0';
 	free(data);
 	return (word);
 }
 
-int	format_tokens_data(t_token **tokens, char **env)
+int	expand_tokens(t_token **tokens, char **env, int exit_status)
 {
 	t_token	*token;
 	int		size;
@@ -108,27 +128,13 @@ int	format_tokens_data(t_token **tokens, char **env)
 		trim_token_data(token);
 		if (!token->data)
 			return (2);
-		size = get_final_data_size(token->data, env, 0);
+		size = get_final_data_size(token->data, env, 0, exit_status);
 		if (size == -1)
 			return (2);
-		token->data = expand_token(token->data, env, size, 0);
+		token->data = expand_token(token->data, env, size, exit_status);
 		if (!token->data)
 			return (2);
 		token = token->next;
 	}
 	return (0);
-}
-
-t_token	**expand_tokens(t_token **tokens, char **env)
-{
-	int	err_status;
-
-	err_status = format_tokens_data(tokens, env);
-	if (err_status == 1)
-		return (free_tokens(tokens),
-			print_error("syntax error near unexpected token"), NULL);
-	else if (err_status == 2)
-		return (free_tokens(tokens),
-			print_error(MALLOC_ERROR), NULL);
-	return (tokens);
 }

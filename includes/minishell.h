@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/23 15:42:39 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:23:58 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdarg.h>
 # include <string.h>
 # include <limits.h>
+# include <signal.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>	 // !! a virer !!
@@ -80,6 +81,7 @@ typedef struct s_token_args
 	int		pos;
 }		t_token_args;
 
+// int	last_signal;
 
 // -- EXECUTION
 int		cmd_handler(t_block **blocks, char ***env);
@@ -135,12 +137,16 @@ void	free_blocks(t_block **blocks);
 void	free_redir(t_redir **redir);
 
 // -- TOKENS
+int		check_tokens(t_token **token);
 t_token	*save_token(t_token *token, char *cmdline, t_token_args *args);
 t_token	*split_cmdline_into_tokens(char *cmdline);
-t_token	**expand_tokens(t_token **tokens, char **env);
+int		expand_tokens(t_token **tokens, char **env, int exit_status);
 
 // -- BLOCKS
 t_block	*join_tokens_into_blocks(t_token **tokens);
+
+// -- SIGNALS
+void	signal_handler(int signal);
 
 // -- TO DELETE !!!!
 void	print_tokens(t_token **tokens);
