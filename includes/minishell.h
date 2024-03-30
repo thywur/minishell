@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:35:32 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:31:02 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_token_args
 	int		pos;
 }		t_token_args;
 
-extern int last_signal;
+extern int g_last_signal;
 
 // -- EXECUTION
 int		cmd_handler(t_block **blocks, char ***env);
