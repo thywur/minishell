@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:29:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/29 15:11:48 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:08:23 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int	replace_in_env(char *str, char ***env)
 
 char	**sort_env(char **env)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*tmp;
 
 	i = 0;
@@ -127,5 +127,3 @@ char	**sort_env(char **env)
 	}
 	return (env);
 }
-
-

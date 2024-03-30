@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:27:08 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/23 15:44:06 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:01:57 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_atoi_exit(char *str)
 	nb = 0;
 	sign = 1;
 	res = 0;
-	while(str[res] == ' ' || (str[res] >= 9 && str[res] <= 13))
+	while (str[res] == ' ' || (str[res] >= 9 && str[res] <= 13))
 		res++;
 	if (str[res] == '-' || str[res] == '+')
 	{
@@ -76,7 +76,6 @@ int	ft_exit(char **args, t_block *cmd_lst, t_pipe *pipex, char ***env)
 			write(2, "exit\nminishell: exit: too many arguments\n", 41);
 		return (1);
 	}
-	// exit(0);
 	free_and_exit(pipex, cmd_lst, *env, 0);
 	return (0);
 }

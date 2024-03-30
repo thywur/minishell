@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 14:34:45 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:57:25 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,7 @@
 
 typedef struct s_pipe
 {
-	// int		in_fd;
-	// int		out_fd;
-	// int		has_heredoc;
 	char	**paths;
-	// char	***cmds;
 	int		cmd_count;
 	pid_t	*pids;
 	int		fd[4];
@@ -52,17 +48,17 @@ typedef struct s_pipe
 
 typedef struct s_redir
 {
-	char	*file;
-	int		type;
+	char			*file;
+	int				type;
 	struct s_redir	*next;
 }	t_redir;
 
-typedef struct	s_block
+typedef struct s_block
 {
-	char	*cmd;
-	char	**args;
-	t_redir	*redir;
-	int		pid;
+	char			*cmd;
+	char			**args;
+	t_redir			*redir;
+	int				pid;
 	struct s_block	*next;
 }	t_block;
 
@@ -89,12 +85,11 @@ void	combine_paths(char ***env, t_pipe *pipex, t_block *cmd_lst);
 void	free_pipex(t_pipe *pipex);
 void	free_arr(char **arr);
 void	free_and_exit(t_pipe *pipex, t_block *blocks, char **env, int exit_status);
-// void	parse_cmds(int argc, char **argv, t_pipe *pipex);
 int		exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env);
 void	err_msg(char *err);
 void	joint_error_msg(char *err);
 void	fd_error(char *filename);
-void 	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env);
+void	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env);
 
 // -- BUILTINS
 int		is_builtin(char *cmd);
@@ -112,7 +107,7 @@ int		add_to_env_free(char *str, char ***env);
 int		del_from_env(char *str, char ***env);
 int		is_in_env(char *s, char **env);
 int		replace_in_env(char *str, char ***env);
-char   **sort_env(char **env);
+char	**sort_env(char **env);
 char	**search_env(char *str, char **env);
 
 // -- STRING UTILS
@@ -126,7 +121,7 @@ int		ft_secured_strlen(char *str);
 
 // -- TOKEN UTILS
 t_token	*add_token(t_token *token);
-t_token	*create_empty_token();
+t_token	*create_empty_token(void);
 void	trim_token_data(t_token *token);
 
 // -- MALLOC UTILS
@@ -162,6 +157,6 @@ void	signal_handler(int signal);
 
 // -- TO DELETE !!!!
 void	print_tokens(t_token **tokens);
-void    print_blocks(t_block **blocks);
+void	print_blocks(t_block **blocks);
 
 #endif

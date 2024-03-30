@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 15:52:09 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:00:34 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	set_fd(t_pipe *pipex, int cmd_no)
 
 int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 {
-	int cmd_no;
+	int	cmd_no;
 
 	cmd_no = 0;
 	while (cmd_no < pipex->cmd_count && cmd_lst)

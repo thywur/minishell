@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 17:01:53 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/25 14:07:27 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:58:05 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,7 @@ void	free_pipex(t_pipe *pipex)
 		}
 		free(pipex->paths);
 	}
-	i = 0;
-	// while (pipex->cmds[i])
-	// 	free_arr(pipex->cmds[i++]);
-	// free(pipex->cmds);
-	// if (pipex->pids)
 	free(pipex->pids);
-	// if (pipex->in_fd > 0)
-	// 	close(pipex->in_fd);
-	// if (pipex->out_fd > 0)
-	// 	close(pipex->out_fd);
 	i = 0;
 	while (i < 4)
 	{
@@ -60,7 +51,6 @@ void	free_pipex(t_pipe *pipex)
 			close(pipex->fd[i]);
 		i++;
 	}
-	// if (pipex->has_heredoc)
 	unlink("here_doc");
 }
 

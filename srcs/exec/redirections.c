@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 15:46:43 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:07:04 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	redir_out(t_pipe *pipex, t_block *cmd_lst)
 static void	redir_append(t_pipe *pipex, t_block *cmd_lst)
 {
 	close(pipex->fd[3]);
-	pipex->fd[3] = open(cmd_lst->redir->file, O_CREAT | O_RDWR | O_APPEND, 0644);
+	pipex->fd[3] = open(cmd_lst->redir->file,
+		O_CREAT | O_RDWR | O_APPEND, 0644);
 }
 
 static void	create_heredoc(t_pipe *pipex, t_redir *redir)
@@ -39,10 +40,12 @@ static void	create_heredoc(t_pipe *pipex, t_redir *redir)
 	pipex->fd[2] = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (pipex->fd[2] < 0)
 		joint_error_msg("here_doc");
+	write(2, "> ", 2);
 	line = get_next_line(0);
 	limiter = ft_strjoin(redir->file, "\n");
 	while (line && ft_strcmp(line, limiter) != 0)
 	{
+		write(2, "> ", 2);
 		write(pipex->fd[2], line, ft_strlen(line));
 		free(line);
 		line = get_next_line(0);
@@ -52,7 +55,7 @@ static void	create_heredoc(t_pipe *pipex, t_redir *redir)
 	close(pipex->fd[2]);
 }
 
-void redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
+void	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 {
 	while (cmd_lst->redir)
 	{
