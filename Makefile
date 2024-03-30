@@ -6,7 +6,7 @@
 #    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/03/30 16:28:24 by alermolo         ###   ########.fr        #
+#    Updated: 2024/03/30 16:45:52 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,16 @@
 
 NAME		=	minishell
 DEBUG		=	yes
-BONUS		=	no
 
 #--includes & libraries--------------------------------------------------------#
 
 INC_DIR			=	includes/
-B_INC_DIR		=	bonus/includes_bonus/
 LIBFT_DIR		=	libft/
 HEADERS 		=	includes/minishell.h
 
 #--sources & objects-----------------------------------------------------------#
 
 SRC_DIR		=		srcs/
-B_SRC_DIR	=		bonus/srcs_bonus
 OBJ_DIR		=		.objects
 SOURCES 	=		srcs/error.c		\
 					srcs/free.c			\
@@ -64,12 +61,8 @@ SOURCES 	=		srcs/error.c		\
 
 #--flags-----------------------------------------------------------------------#
 
-ifeq ($(BONUS), no)
-CFLAGS		=	-Wall -Wextra -lreadline -g3  -I $(LIBFT_DIR) -I $(INC_DIR) #-Werror
-else
-CFLAGS		=	-Wall -Wextra -lreadline -I $(LIBFT_DIR) -I $(B_INC_DIR) #-Werror
-endif
-
+CFLAGS		=	-Wall -Wextra -Werror -g3  -I $(LIBFT_DIR) -I $(INC_DIR)
+LDFLAGS		=	-lreadline
 DFLAGS		=	-g3 -fsanitize=address
 
 #--debug & define flags--------------------------------------------------------#
@@ -84,11 +77,7 @@ LIBFT	=	$(LIBFT_DIR)/libft.a
 
 #--objects---------------------------------------------------------------------#
 
-ifeq ($(BONUS), no)
 OBJECTS	=	$(addprefix $(OBJ_DIR)/, $(SOURCES:.c=.o))
-else
-OBJECTS	=	$(addprefix $(OBJ_DIR)/, $(SOURCES_BONUS:.c=.o))
-endif
 
 #--global rules----------------------------------------------------------------#
 
@@ -101,18 +90,11 @@ all:
 	$(MAKE) $(NAME)
 
 $(NAME): $(OBJECTS) $(LIBFT)
-	$(CC) $^ $(CFLAGS) $(LIBFT) -o $@
+	$(CC) $^ $(CFLAGS) $(LDFLAGS) $(LIBFT) -o $@
 
-ifeq ($(BONUS), no)
 $(OBJ_DIR)/%.o: %.c $(HEADERS)
 	@ mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
-else
-$(OBJ_DIR)/%.o: %.c $(HEADERS_BONUS)
-	@ mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
-endif
-
 
 #--libs, debugs & bonus--------------------------------------------------------#
 
@@ -121,9 +103,6 @@ libs:
 
 debug:
 	$(MAKE) re DEBUG=yes
-
-bonus:
-	$(MAKE) BONUS=yes
 
 #--re, clean & fclean----------------------------------------------------------#
 
@@ -142,4 +121,4 @@ fclean:
 
 #--PHONY-----------------------------------------------------------------------#
 
-.PHONY: all libs debug bonus re clean fclean
+.PHONY: all libs debug re clean fclean
