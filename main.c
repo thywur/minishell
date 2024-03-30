@@ -6,11 +6,13 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/30 16:11:04 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:37:40 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	last_signal;
 
 int	dup_env(char ***env)
 {
@@ -48,7 +50,7 @@ int	main(int argc, char **argv, char **env)
 	if (dup_env(&env) == -1)
 		return (1);
 
-	// last_signal = 0;
+	last_signal = 0;
 	exit_status = 0;
 
 	while (42)

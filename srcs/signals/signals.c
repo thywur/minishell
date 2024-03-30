@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:14:56 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/30 16:26:37 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:24:23 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	sigint_handler(int signal)
 void	signal_handler(int signal)
 {
 	sigint_handler(signal);
-	if (signal == SIGINT)
-		rl_redisplay();
 }
 
 void	signal_exec_handler(int signal)
@@ -60,12 +58,14 @@ void	signal_hub(char mod)
 	act.sa_flags = 0;
 	if (mod == 1)
 	{
+		printf("hello main\n");
 		act.sa_handler = &signal_handler;
 		sigemptyset(&act.sa_mask);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mod == 2)
 	{
+		printf("hello child\n");
 		act.sa_handler = &signal_exec_handler;
 		sigemptyset(&act.sa_mask);
 		act.sa_flags = SA_SIGINFO;
@@ -73,6 +73,7 @@ void	signal_hub(char mod)
 	}
 	else if (mod == 3)
 	{
+		printf("hello heredoc\n");
 		act.sa_handler = &sigint_handler;
 		sigemptyset(&act.sa_mask);
 		signal(SIGQUIT, SIG_IGN);
