@@ -6,7 +6,7 @@
 #    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/03/30 15:47:47 by alermolo         ###   ########.fr        #
+#    Updated: 2024/03/30 16:28:24 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,8 @@ SOURCES 	=		srcs/error.c		\
 					srcs/utils/utils_free.c \
 					srcs/utils/utils_redir.c \
 					srcs/utils/utils.c \
+					srcs/utils/ft_lstlast.c	\
+					srcs/utils/ft_lstsize.c	\
 					srcs/tokens/check_tokens.c \
 					srcs/tokens/save_token.c \
 					srcs/tokens/cmdline_to_tokens.c \
