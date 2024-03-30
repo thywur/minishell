@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 15:45:33 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:52:09 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,27 @@ static int	wait_for_children(t_pipe *pipex)
 	status = 0;
 	while (i < pipex->cmd_count)
 	{
-		// dprintf(2, "waiting for pid %d\n", pipex->pids[i]);
 		waitpid(pipex->pids[i], &status, 0);
-		// dprintf(2, "pid %d exited with status %d\n", pipex->pids[i], status);
 		i++;
 	}
 	if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
 	return (status);
+}
+
+static void	path_not_found(t_pipe *pipex, t_block *cmd_lst, char ***env)
+{
+	if (is_builtin(cmd_lst->cmd))
+	{
+		exec_builtin(pipex->fd, cmd_lst, pipex, env);
+		free_and_exit(pipex, cmd_lst, *env, EXIT_SUCCESS);
+	}
+	else
+	{
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		free_and_exit(pipex, cmd_lst, *env, 127);
+	}
 }
 
 static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char ***env)
@@ -52,19 +65,7 @@ static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char ***env)
 	if (pipex->fd[3] != 1)
 		close(pipex->fd[3]);
 	if (!(pipex->paths[cmd_no]))
-	{
-		if (is_builtin(cmd_lst->cmd))
-		{
-			exec_builtin(pipex->fd, cmd_lst, pipex, env);
-			free_and_exit(pipex, cmd_lst, *env, EXIT_SUCCESS);
-		}
-		else
-		{
-			close(STDIN_FILENO);
-			close(STDOUT_FILENO);
-			free_and_exit(pipex, cmd_lst, *env, 127);
-		}
-	}
+		path_not_found(pipex, cmd_lst, env);
 	execve(pipex->paths[cmd_no], cmd_lst->args, *env);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
@@ -92,16 +93,11 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		set_fd(pipex, cmd_no);
 		if (cmd_lst->redir)
 			redirect(pipex, cmd_lst, env);
-		// if (pipex->paths[cmd_no])
-		// {
 		pipex->pids[cmd_no] = fork();
 		if (pipex->pids[cmd_no] < 0)
 			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 		if (pipex->pids[cmd_no] == 0)
 			exec_child(pipex, cmd_lst, cmd_no, env);
-		// }
-		// if (is_builtin(cmd_lst->cmd) && pipex->pids[cmd_no] == 0)
-		// 	exec_builtin(pipex->fd, cmd_lst, pipex, env);
 		if (pipex->fd[2] > 0)
 			close(pipex->fd[2]);
 		if (pipex->fd[3] > 0)
