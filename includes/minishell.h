@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 14:23:58 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:34:45 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env);
 void	err_msg(char *err);
 void	joint_error_msg(char *err);
 void	fd_error(char *filename);
+void 	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env);
 
 // -- BUILTINS
 int		is_builtin(char *cmd);
@@ -103,6 +104,16 @@ int		ft_cd(char **args, char ***env);
 int		ft_env(char ***env, int fd[2]);
 int		ft_exit(char **args, t_block *cmd_lst, t_pipe *pipex, char ***env);
 int		ft_pwd(int fd[2]);
+int		ft_export(char **args, char ***env, int fd[2]);
+int		ft_unset(char **args, char ***env);
+
+// -- BUILTIN UTILS
+int		add_to_env_free(char *str, char ***env);
+int		del_from_env(char *str, char ***env);
+int		is_in_env(char *s, char **env);
+int		replace_in_env(char *str, char ***env);
+char   **sort_env(char **env);
+char	**search_env(char *str, char **env);
 
 // -- STRING UTILS
 int		ft_strcmpr(char *s1, char *s2);
@@ -135,6 +146,7 @@ t_redir	*ft_lstlast(t_redir *lst);
 void	free_tokens(t_token **tokens);
 void	free_blocks(t_block **blocks);
 void	free_redir(t_redir **redir);
+void	free_single_redir(t_redir **redir);
 
 // -- TOKENS
 int		check_tokens(t_token **token);

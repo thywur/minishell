@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/25 16:06:36 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:19:30 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	create_heredoc(t_pipe *pipex, t_redir *redir)
 	close(pipex->fd[2]);
 }
 
-static void redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
+void redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 {
 	while (cmd_lst->redir)
 	{
@@ -128,12 +128,13 @@ static void redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 			create_heredoc(pipex, cmd_lst->redir);
 			pipex->fd[2] = open("here_doc", O_RDONLY);
 		}
-		if (pipex->fd[2] == -1 || pipex->fd[2] == -1)
+		if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
 		{
 			perror(NULL);
 			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 		}
-		cmd_lst->redir = cmd_lst->redir->next;
+		free_single_redir(&cmd_lst->redir);
+		// cmd_lst->redir = cmd_lst->redir->next;
 	}
 }
 

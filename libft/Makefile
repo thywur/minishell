@@ -6,7 +6,7 @@
 #    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/08 16:11:24 by alermolo          #+#    #+#              #
-#    Updated: 2024/03/28 11:25:23 by quteriss         ###   ########.fr        #
+#    Updated: 2024/03/30 14:35:38 by quteriss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,11 @@ SRCS = 		ft_split.c	\
 			ft_lstlast.c	\
 			ft_arrlen.c	\
 			ft_isdigit.c	\
+			ft_isalpha.c	\
+			ft_isalnum.c	\
 			ft_strstr.c	\
 			ft_itoa.c \
+			ft_strchr.c	\
 
 OBJ_DIR =	../.objects
 

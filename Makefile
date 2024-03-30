@@ -6,7 +6,7 @@
 #    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/03/28 14:25:45 by quteriss         ###   ########.fr        #
+#    Updated: 2024/03/30 14:34:33 by quteriss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #--variables-------------------------------------------------------------------#
 
 NAME		=	minishell
-DEBUG		=	no
+DEBUG		=	yes
 BONUS		=	no
 
 #--includes & libraries--------------------------------------------------------#
@@ -35,11 +35,14 @@ SOURCES 	=		srcs/exec/exec.c			\
 					srcs/exec/cmd_handler.c		\
 					srcs/exec/cmd_parsing.c		\
 					srcs/builtins/exec_builtin.c	\
+					srcs/builtins/builtin_utils.c	\
 					srcs/builtins/cd.c	\
 					srcs/builtins/echo.c	\
 					srcs/builtins/env.c	\
 					srcs/builtins/exit.c	\
 					srcs/builtins/pwd.c	\
+					srcs/builtins/export.c	\
+					srcs/builtins/unset.c	\
 					srcs/utils/utils_malloc.c \
 					srcs/utils/utils_string.c \
 					srcs/utils/utils_string2.c \
