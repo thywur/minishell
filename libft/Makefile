@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
+#    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/08 16:11:24 by alermolo          #+#    #+#              #
-#    Updated: 2024/03/30 14:35:38 by quteriss         ###   ########.fr        #
+#    Updated: 2024/03/30 16:25:59 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,6 @@ SRCS = 		ft_split.c	\
 			ft_substr.c	\
 			get_next_line.c		\
 			get_next_line_utils.c	\
-			ft_lstsize.c	\
-			ft_lstlast.c	\
 			ft_arrlen.c	\
 			ft_isdigit.c	\
 			ft_isalpha.c	\
