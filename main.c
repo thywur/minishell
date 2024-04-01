@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/30 17:30:57 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/01 14:05:10 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	main(int argc, char **argv, char **env)
 
 	g_last_signal = 0;
 	exit_status = 0;
+	blocks = NULL;
 
 	while (42)
 	{
@@ -59,9 +60,15 @@ int	main(int argc, char **argv, char **env)
 
 		cmdline = readline(">>> ");
 		if (!cmdline)
-			return (1);
+		{
+			printf("exit\n");
+			if (blocks)
+				free_blocks(&blocks);
+			free_arr(env);
+			return (g_last_signal);
+		}
 
-		if (ft_strlen(cmdline) == 0)	
+		if (ft_strlen(cmdline) == 0)
 			continue ;
 		add_history(cmdline);
 
@@ -99,4 +106,5 @@ int	main(int argc, char **argv, char **env)
 
 		free_blocks(&blocks);
 	}
+	return (g_last_signal);
 }

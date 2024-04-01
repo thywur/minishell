@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:14:56 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/30 17:32:50 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:58:35 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ void	sigint_handler(int signal)
 	g_last_signal = signal;
 }
 
+void	signal_handler(int signal)
+{
+	sigint_handler(signal);
+	if (signal == SIGINT)
+		rl_redisplay();
+}
+
 void	signal_exec_handler(int signal)
 {
 	if (signal == SIGINT)
@@ -53,14 +60,15 @@ void	signal_hub(char mod)
 	act.sa_flags = 0;
 	if (mod == 1)
 	{
-		// printf("hello main\n");
+		printf("sig main\n");
 		act.sa_handler = &signal_handler;
 		sigemptyset(&act.sa_mask);
+		// sigaction(SIGINT, &act, NULL);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mod == 2)
 	{
-		// printf("hello child\n");
+		printf("sig child\n");
 		act.sa_handler = &signal_exec_handler;
 		sigemptyset(&act.sa_mask);
 		act.sa_flags = SA_SIGINFO;
@@ -68,9 +76,10 @@ void	signal_hub(char mod)
 	}
 	else if (mod == 3)
 	{
-		// printf("hello heredoc\n");
-		act.sa_handler = &signal_handler;
+		printf("sig heredoc\n");
+		act.sa_handler = &sigint_handler;
 		sigemptyset(&act.sa_mask);
+		sigaction(SIGINT, &act, NULL);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	sigaction(SIGINT, &act, NULL);
