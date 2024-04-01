@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:13:19 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:08:13 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ static void	create_heredoc(t_pipe *pipex, t_redir *redir)
 {
 	char	*line;
 	char	*limiter;
+	int		line_no;
 
 	pipex->fd[2] = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (pipex->fd[2] < 0)
 		joint_error_msg("here_doc");
 	write(2, "> ", 2);
 	line = get_next_line(0);
+	line_no = 1;
 	limiter = ft_strjoin(redir->file, "\n");
 	signal_hub(3);
 	while (line && ft_strcmp(line, limiter) != 0)
@@ -50,7 +52,11 @@ static void	create_heredoc(t_pipe *pipex, t_redir *redir)
 		write(pipex->fd[2], line, ft_strlen(line));
 		free(line);
 		line = get_next_line(0);
+		line_no++;
 	}
+	// dprintf(2, "last sig %d\n", g_last_signal);
+	if (!line && g_last_signal == 0)
+		err_heredoc(limiter, line_no);
 	free(line);
 	free(limiter);
 	close(pipex->fd[2]);

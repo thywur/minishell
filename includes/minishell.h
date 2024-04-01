@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 17:31:02 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:06:48 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	ft_lst_delone(t_token **tokens, int index);
 // -- REDIRECTIONS UTILS
 void	ft_lstadd_back(t_redir **lst, t_redir *new);
 t_redir	*create_redir(t_token *token, t_token *file_token);
+void	err_heredoc(char *limiter, int line_no);
 
 // -- UTILS
 void	print_error(char *error_descriptor);
