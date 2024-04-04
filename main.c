@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/04 15:01:19 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:03:18 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,21 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	g_last_signal = 0;
 	exit_status = 0;
+
 	while (42)
 	{
 		signal_hub(1);
 		cmdline = readline(">>> ");
 		if (!cmdline)
-			return (1);
-		if (ft_strlen(cmdline) == 0)	
+		{
+			printf("exit\n");
+			if (blocks)
+				free_blocks(&blocks);
+			free_arr(env);
+			return (g_last_signal);
+		}
+
+		if (ft_strlen(cmdline) == 0)
 			continue ;
 		add_history(cmdline);
 		blocks = process_cmdline(cmdline, &exit_status, env);
@@ -94,4 +102,5 @@ int	main(int argc, char **argv, char **env)
 		close(saved_stdout);
 		free_blocks(&blocks);
 	}
+	return (g_last_signal);
 }

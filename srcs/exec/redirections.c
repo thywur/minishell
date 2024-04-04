@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:13:19 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:45:06 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,39 @@ static void	redir_append(t_pipe *pipex, t_block *cmd_lst)
 		O_CREAT | O_RDWR | O_APPEND, 0644);
 }
 
-static void	create_heredoc(t_pipe *pipex, t_redir *redir)
+static void	create_heredoc(t_pipe *pipex, t_redir *redir, char **env)
 {
 	char	*line;
 	char	*limiter;
+	int		line_no;
 
 	pipex->fd[2] = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (pipex->fd[2] < 0)
 		joint_error_msg("here_doc");
-	write(2, "> ", 2);
-	line = get_next_line(0);
+	// write(2, "> ", 2);
+	// line = get_next_line(STDIN_FILENO);
+	line = readline("> ");
+	line = ft_strjoin_free(line, "\n");
+	if (line && ft_contains(line, '$'))
+		line = expand_string(line, env);
+	line_no = 1;
 	limiter = ft_strjoin(redir->file, "\n");
+	// limiter = ft_strdup(redir->file);
 	signal_hub(3);
 	while (line && ft_strcmp(line, limiter) != 0)
 	{
-		write(2, "> ", 2);
+		// write(2, "> ", 2);
 		write(pipex->fd[2], line, ft_strlen(line));
 		free(line);
-		line = get_next_line(0);
+		// line = get_next_line(STDIN_FILENO);
+		line = readline("> ");
+		line = ft_strjoin_free(line, "\n");
+		if (line && ft_contains(line, '$'))
+			line = expand_string(line, env);
+		line_no++;
 	}
+	if (!line && g_last_signal == 0)
+		err_heredoc(limiter, line_no);
 	free(line);
 	free(limiter);
 	close(pipex->fd[2]);
@@ -70,7 +84,7 @@ void	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		{
 			if (pipex->fd[2] > 0)
 				close(pipex->fd[2]);
-			create_heredoc(pipex, cmd_lst->redir);
+			create_heredoc(pipex, cmd_lst->redir, *env);
 			pipex->fd[2] = open("here_doc", O_RDONLY);
 		}
 		if (pipex->fd[2] == -1 || pipex->fd[3] == -1)

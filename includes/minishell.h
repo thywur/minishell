@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 17:31:02 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/04 13:29:38 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,13 @@ int		is_not_empty(char *str, int size);
 char	*ft_strtrim(char *s1, char *set);
 int		ft_strcpy(char *dst, const char *src);
 int		ft_secured_strlen(char *str);
+char	*expand_string(char *str, char **env);
 
 // -- TOKEN UTILS
 t_token	*add_token(t_token *token);
 t_token	*create_empty_token(void);
 void	trim_token_data(t_token *token);
+int		get_final_data_size(char *data, char **env, int size, int exit_status);
 
 // -- MALLOC UTILS
 char	*ft_strdup_size(char *str, int size);
@@ -131,6 +133,7 @@ void	ft_lst_delone(t_token **tokens, int index);
 // -- REDIRECTIONS UTILS
 void	ft_lstadd_back(t_redir **lst, t_redir *new);
 t_redir	*create_redir(t_token *token, t_token *file_token);
+void	err_heredoc(char *limiter, int line_no);
 
 // -- UTILS
 void	print_error(char *error_descriptor);
@@ -148,13 +151,17 @@ int		check_tokens(t_token **token);
 t_token	*save_token(t_token *token, char *cmdline, t_token_args *args);
 t_token	*split_cmdline_into_tokens(char *cmdline);
 int		expand_tokens(t_token **tokens, char **env, int exit_status);
+char	*expand_token(char *data, char **env, int size, int exit_status);
 
 // -- BLOCKS
 t_block	*join_tokens_into_blocks(t_token **tokens);
 
 // -- SIGNALS
-void	signal_hub(char mod);
+void	signal_hub(int mod);
 void	handle_sigchild(int signal);
+void	sigint_handler(int signal);
+void	signal_handler(int signal);
+void	signal_exec_handler(int signal);
 
 // -- TO DELETE !!!!
 void	print_tokens(t_token **tokens);

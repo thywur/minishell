@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
+#    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/03/30 17:25:43 by quteriss         ###   ########.fr        #
+#    Updated: 2024/04/04 13:24:30 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SOURCES 	=		srcs/error.c		\
 					srcs/exec/cmd_parsing.c		\
 					srcs/exec/exec.c			\
 					srcs/exec/redirections.c	\
+					srcs/exec/heredoc_utils.c	\
 					srcs/builtins/exec_builtin.c	\
 					srcs/builtins/builtin_utils.c	\
 					srcs/builtins/cd.c	\
@@ -61,6 +62,7 @@ SOURCES 	=		srcs/error.c		\
 
 #--flags-----------------------------------------------------------------------#
 
+CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror -g3  -I $(LIBFT_DIR) -I $(INC_DIR)
 LDFLAGS		=	-lreadline
 DFLAGS		=	-g3 -fsanitize=address
