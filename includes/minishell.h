@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 13:29:38 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:36:10 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ typedef struct s_token_args
 	int		pos;
 }		t_token_args;
 
-extern int g_last_signal;
+extern int	g_last_signal;
 
 // -- EXECUTION
 int		cmd_handler(t_block **blocks, char ***env);
 void	combine_paths(char ***env, t_pipe *pipex, t_block *cmd_lst);
 void	free_pipex(t_pipe *pipex);
 void	free_arr(char **arr);
-void	free_and_exit(t_pipe *pipex, t_block *blocks, char **env, int exit_status);
+void	free_and_exit(t_pipe *pipex, t_block *blocks, char **env, int status);
 int		exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env);
 void	err_msg(char *err);
 void	joint_error_msg(char *err);
@@ -134,6 +134,7 @@ void	ft_lst_delone(t_token **tokens, int index);
 void	ft_lstadd_back(t_redir **lst, t_redir *new);
 t_redir	*create_redir(t_token *token, t_token *file_token);
 void	err_heredoc(char *limiter, int line_no);
+char	*readline_heredoc(char **env);
 
 // -- UTILS
 void	print_error(char *error_descriptor);

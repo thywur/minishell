@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:18:54 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:45:08 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static int	wait_for_children(t_pipe *pipex)
 	status = 0;
 	while (i < pipex->cmd_count)
 	{
-		waitpid(pipex->pids[i], &status, 0);
+		waitpid(pipex->pids[i], &g_last_signal, 0);
 		i++;
 	}
-	if (WIFEXITED(status))
-		status = WEXITSTATUS(status);
+	if (WIFEXITED(g_last_signal))
+		g_last_signal = WEXITSTATUS(g_last_signal);
 	return (status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:29:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:08:23 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:46:24 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	is_in_env(char *s, char **env)
 			j++;
 		if ((env[i][j] == '\0' || env[i][j] == '=') && s[j] == '=')
 			return (2);
-		if ((env[i][j] == '\0' && s[j] == '\0')			//ca sert a rien ?
+		if ((env[i][j] == '\0' && s[j] == '\0')
 			|| (env[i][j] == '=' && s[j] == '\0'))
 			return (1);
 		i++;
