@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/04 14:28:09 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:04:03 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int	expand_tokens(t_token **tokens, char **env, int exit_status)
 		trim_token_data(token);
 		if (!token->data)
 			return (1);
+		token->is_inquote = is_inquote(token->data);
 		size = get_final_data_size(token->data, env, 0, exit_status);
 		if (size == -1)
 			return (1);

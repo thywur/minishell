@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 16:44:40 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:08:15 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_block
 	char			**args;
 	t_redir			*redir;
 	int				pid;
+	int				heredoc_expansion;
 	struct s_block	*next;
 }	t_block;
 
@@ -67,6 +68,7 @@ typedef struct s_token
 	int				type;
 	int				error;
 	char			*data;
+	int				is_inquote;
 	struct s_token	*next;
 }					t_token;
 
@@ -125,6 +127,7 @@ t_token	*add_token(t_token *token);
 t_token	*create_empty_token(void);
 void	trim_token_data(t_token *token);
 int		get_final_data_size(char *data, char **env, int size, int exit_status);
+int		is_inquote(char *data);
 
 // -- MALLOC UTILS
 char	*ft_strdup_size(char *str, int size);
@@ -132,9 +135,9 @@ void	ft_lst_delone(t_token **tokens, int index);
 
 // -- REDIRECTIONS UTILS
 void	ft_lstadd_back(t_redir **lst, t_redir *new);
-t_redir	*create_redir(t_token *token, t_token *file_token);
+t_redir	*create_redir(t_token *token, t_token *file_token, int *heredoc);
 void	err_heredoc(char *limiter, int line_no);
-char	*readline_heredoc(char **env);
+char	*readline_heredoc(t_block *block, char **env);
 
 // -- UTILS
 void	print_error(char *error_descriptor);

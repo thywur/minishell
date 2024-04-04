@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:29:14 by quentinteri       #+#    #+#             */
-/*   Updated: 2024/03/27 13:42:04 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:01:59 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_block	*new_empty_block(void)
 	block->args = NULL;
 	block->next = NULL;
 	block->redir = NULL;
+	block->heredoc_expansion = 1;
 	return (block);
 }
 
@@ -82,7 +83,7 @@ t_token	*create_block(t_block *block, t_token **tokens, int count)
 			count++;
 		else if (token->type > 0 && token->type < 5)
 		{
-			redir = create_redir(token, token->next);
+			redir = create_redir(token, token->next, &block->heredoc_expansion);
 			if (!redir)
 				return (NULL);
 			ft_lstadd_back(&block->redir, redir);
