@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:53:33 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/29 15:53:43 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:34:12 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	free_single_redir(t_redir **redir)
 		free((*redir)->file);
 	free(*redir);
 	*redir = tmp;
+	unlink(".here_doc");
 }
 
 void	free_redir(t_redir **redir)
