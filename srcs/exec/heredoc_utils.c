@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:21:54 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 16:00:34 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:54:07 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ char	*expand_string(char *str, char **env)
 	return (new_str);
 }
 
-char	*readline_heredoc(char **env)
+char	*readline_heredoc(t_block *block, char **env)
 {
 	char	*line;
 
 	line = readline("> ");
 	if (line)
 		line = ft_strjoin_free(line, "\n");
-	if (line && ft_contains(line, '$'))
+	if (line && block->heredoc_expansion && ft_contains(line, '$'))
 		line = expand_string(line, env);
 	return (line);
 }
