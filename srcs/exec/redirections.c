@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 16:03:46 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:36:09 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	create_heredoc(t_pipe *pipex, t_redir *redir, char **env)
 	pipex->fd[2] = open(".here_doc", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (pipex->fd[2] < 0)
 		joint_error_msg(".here_doc");
-	signal_hub(3);
+	// signal_hub(3);
 	line = readline_heredoc(env);
 	line_no = 1;
 	limiter = ft_strjoin(redir->file, "\n");

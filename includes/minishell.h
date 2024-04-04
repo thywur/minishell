@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 15:36:10 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:44:40 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,11 +158,13 @@ char	*expand_token(char *data, char **env, int size, int exit_status);
 t_block	*join_tokens_into_blocks(t_token **tokens);
 
 // -- SIGNALS
-void	signal_hub(int mod);
-void	handle_sigchild(int signal);
-void	sigint_handler(int signal);
-void	signal_handler(int signal);
-void	signal_exec_handler(int signal);
+// void	signal_hub(int mod);
+// void	handle_sigchild(int signal);
+// void	sigint_handler(int signal);
+// void	signal_handler(int signal);
+// void	signal_exec_handler(int signal);
+void	sig_handler_main(int sig);
+void	sig_handler_child(int sig);
 
 // -- TO DELETE !!!!
 void	print_tokens(t_token **tokens);

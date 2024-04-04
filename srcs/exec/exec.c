@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 15:45:08 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:04:13 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static int	wait_for_children(t_pipe *pipex)
 	status = 0;
 	while (i < pipex->cmd_count)
 	{
-		waitpid(pipex->pids[i], &g_last_signal, 0);
+		waitpid(pipex->pids[i], &status, 0);
 		i++;
 	}
-	if (WIFEXITED(g_last_signal))
-		g_last_signal = WEXITSTATUS(g_last_signal);
-	return (status);
+	if (WIFEXITED(status) && g_last_signal != 130)
+		g_last_signal = WEXITSTATUS(status);
+	return (g_last_signal);
 }
 
 static void	path_not_found(t_pipe *pipex, t_block *cmd_lst, char ***env)
@@ -46,7 +46,9 @@ static void	path_not_found(t_pipe *pipex, t_block *cmd_lst, char ***env)
 
 static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char ***env)
 {
-	signal_hub(2);
+	// signal_hub(2);
+	// signal(SIGINT, &sig_handler_child);
+	// signal(SIGQUIT, &sig_handler_child);
 	if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
 		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	if (pipex->fd[0] != 0)
@@ -94,7 +96,10 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		set_fd(pipex, cmd_no);
 		if (cmd_lst->redir)
 			redirect(pipex, cmd_lst, env);
-		signal(SIGINT, SIG_IGN);
+		// signal(SIGINT, SIG_DFL);
+		// signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, &sig_handler_child);
+		signal(SIGQUIT, &sig_handler_child);
 		pipex->pids[cmd_no] = fork();
 		if (pipex->pids[cmd_no] < 0)
 			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
@@ -104,7 +109,7 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 			close(pipex->fd[2]);
 		if (pipex->fd[3] > 0)
 			close(pipex->fd[3]);
-		signal(SIGCHLD, handle_sigchild);
+		// signal(SIGCHLD, handle_sigchild);
 		pipex->fd[2] = pipex->fd[0];
 		cmd_lst = cmd_lst->next;
 		cmd_no++;

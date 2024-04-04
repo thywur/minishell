@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/04 16:09:24 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:48:32 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ char	*read_cmdline(t_block **blocks, char **env)
 {
 	char	*cmdline;
 
-	signal_hub(1);
+	// signal_hub(1);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGINT, &sig_handler_main);
 	cmdline = readline(">>> ");
 	if (!cmdline)
 	{
@@ -113,6 +117,7 @@ int	main(int argc, char **argv, char **env)
 		if (!blocks)
 			continue ;
 		execute_cmdline(&blocks, env, &exit_status);
+		free(cmdline);
 	}
 	return (g_last_signal);
 }
