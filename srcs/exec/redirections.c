@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 14:28:24 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:45:06 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,28 @@ static void	create_heredoc(t_pipe *pipex, t_redir *redir, char **env)
 	pipex->fd[2] = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (pipex->fd[2] < 0)
 		joint_error_msg("here_doc");
-	write(2, "> ", 2);
-	line = get_next_line(STDIN_FILENO);
+	// write(2, "> ", 2);
+	// line = get_next_line(STDIN_FILENO);
+	line = readline("> ");
+	line = ft_strjoin_free(line, "\n");
 	if (line && ft_contains(line, '$'))
 		line = expand_string(line, env);
 	line_no = 1;
 	limiter = ft_strjoin(redir->file, "\n");
+	// limiter = ft_strdup(redir->file);
 	signal_hub(3);
-	// signal(SIGQUIT, SIG_IGN);
 	while (line && ft_strcmp(line, limiter) != 0)
 	{
-		write(2, "> ", 2);
+		// write(2, "> ", 2);
 		write(pipex->fd[2], line, ft_strlen(line));
 		free(line);
-		line = get_next_line(STDIN_FILENO);
+		// line = get_next_line(STDIN_FILENO);
+		line = readline("> ");
+		line = ft_strjoin_free(line, "\n");
 		if (line && ft_contains(line, '$'))
 			line = expand_string(line, env);
 		line_no++;
 	}
-	// dprintf(2, "last sig %d\n", g_last_signal);
 	if (!line && g_last_signal == 0)
 		err_heredoc(limiter, line_no);
 	free(line);
