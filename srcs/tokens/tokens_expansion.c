@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/28 15:04:16 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:28:09 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*expand_variable(char *data, char **env, int *i, int exit_status)
 	int		j;
 
 	j = 0;
-	while (data[j] && !ft_contains(" \t\'\"", data[j])
+	while (data[j] && !ft_contains(" \t\n\'\"", data[j])
 		&& !(j != 0 && data[j] == '$'))
 		j++;
 	field = ft_substr(data, 1, j - 1);
@@ -48,6 +48,7 @@ char	*expand_variable(char *data, char **env, int *i, int exit_status)
 	if (!word)
 		return (NULL);
 	store_field(env, word, &field);
+	free(word);
 	*i += j - 1;
 	return (ft_strdup(field));
 }
@@ -127,13 +128,13 @@ int	expand_tokens(t_token **tokens, char **env, int exit_status)
 	{
 		trim_token_data(token);
 		if (!token->data)
-			return (2);
+			return (1);
 		size = get_final_data_size(token->data, env, 0, exit_status);
 		if (size == -1)
-			return (2);
+			return (1);
 		token->data = expand_token(token->data, env, size, exit_status);
 		if (!token->data)
-			return (2);
+			return (1);
 		token = token->next;
 	}
 	return (0);
