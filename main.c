@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/04 16:48:32 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:31:17 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ char	*read_cmdline(t_block **blocks, char **env)
 {
 	char	*cmdline;
 
-	// signal_hub(1);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);

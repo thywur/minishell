@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/05 14:36:35 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:02:14 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-// # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -26,7 +25,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <stdio.h>	 // !! a virer !!
+# include <stdio.h>
 
 # define WORD 5
 # define PIPE 6
@@ -44,6 +43,7 @@ typedef struct s_pipe
 	int		cmd_count;
 	pid_t	*pids;
 	int		fd[4];
+	int		has_heredoc;
 }	t_pipe;
 
 typedef struct s_redir
@@ -165,5 +165,6 @@ t_block	*join_tokens_into_blocks(t_token **tokens);
 // -- SIGNALS
 void	sig_handler_main(int sig);
 void	sig_handler_child(int sig);
+void	sig_handler_heredoc(int sig);
 
 #endif

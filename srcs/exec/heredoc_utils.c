@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:21:54 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 16:54:07 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:15:15 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,4 @@ void	err_heredoc(char *limiter, int line_no)
 	while (i < ft_strlen(limiter) - 1)
 		err_putchar(limiter[i++]);
 	write(2, "')\n", 3);
-	g_last_signal = 130;
 }
