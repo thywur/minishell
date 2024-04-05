@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/04 17:04:03 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:05:12 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,8 @@ int	get_final_data_size(char *data, char **env, int size, int exit_status)
 				return (k);
 			size += k;
 		}
-		else if (!quote && ft_contains("\"'", data[i]))
-			quote = data[i];
-		else if (quote && quote == data[i])
-			quote = 0;
 		else
-			size++;
+			get_final_data_size_extra(&quote, data[i], &size);
 		i++;
 	}
 	return (size);
@@ -106,16 +102,11 @@ char	*expand_token(char *data, char **env, int size, int exit_status)
 			j += ft_strcpy(word + j, field);
 			free(field);
 		}
-		else if (!quote && ft_contains("\"'", data[i]))
-			quote = data[i];
-		else if (quote && quote == data[i])
-			quote = 0;
 		else
-			word[j++] = data[i];
+			expand_token_extra(&quote, data[i], word, &j);
 	}
 	word[size] = '\0';
-	free(data);
-	return (word);
+	return (free(data), word);
 }
 
 int	expand_tokens(t_token **tokens, char **env, int exit_status)
