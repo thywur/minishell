@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:27:08 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:01:57 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:22:01 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ int	ft_exit(char **args, t_block *cmd_lst, t_pipe *pipex, char ***env)
 			write(2, "exit\nminishell: exit: too many arguments\n", 41);
 		return (1);
 	}
-	free_and_exit(pipex, cmd_lst, *env, 0);
-	return (0);
+	free_and_exit(pipex, cmd_lst, *env, g_last_signal);
+	return (g_last_signal);
 }

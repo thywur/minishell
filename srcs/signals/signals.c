@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:14:56 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/05 13:35:27 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:37:14 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void	sig_handler_main(int sig)
 {
-	if (sig == SIGINT)
-		g_last_signal = 130;
 	(void)sig;
-	write(2, "\n", 1);
+	g_last_signal = 130;
+	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();

@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/05 13:31:17 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:00:37 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*read_cmdline(t_block **blocks, char **env)
 
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
 	signal(SIGINT, &sig_handler_main);
 	cmdline = readline(">>> ");
 	if (!cmdline)
@@ -77,14 +76,14 @@ t_block	*process_cmdline(char *cmdline, int *exit_status, char **env)
 	return (blocks);
 }
 
-void	execute_cmdline(t_block **blocks, char **env, int *exit_status)
+void	execute_cmdline(t_block **blocks, char ***env, int *exit_status)
 {
 	int		saved_stdin;
 	int		saved_stdout;
 
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
-	*exit_status = cmd_handler(blocks, &env);
+	*exit_status = cmd_handler(blocks, env);
 	dup2(saved_stdin, STDIN_FILENO);
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdin);
@@ -115,7 +114,7 @@ int	main(int argc, char **argv, char **env)
 		blocks = process_cmdline(cmdline, &exit_status, env);
 		if (!blocks)
 			continue ;
-		execute_cmdline(&blocks, env, &exit_status);
+		execute_cmdline(&blocks, &env, &exit_status);
 		free(cmdline);
 	}
 	return (g_last_signal);

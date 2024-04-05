@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:31:02 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:03:36 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:03:50 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,19 @@ int	cd_home(char ***env)
 	char	*home;
 	char	*oldpwd;
 
-	oldpwd = getcwd(NULL, 0);
-	if (!oldpwd)
-		return (perror("minishell"), 1);
 	home = getenv("HOME");
 	if (!home)
 	{
 		write(2, "minishell: cd: HOME not set\n", 28);
-		free(oldpwd);
 		return (1);
 	}
-	if (chdir(home) == -1)
+	oldpwd = getcwd(NULL, 0);
+	if (!oldpwd)
 		return (perror("minishell"), 1);
+	if (chdir(home) == -1)
+		return (free(oldpwd), perror("minishell"), 1);
 	if (del_from_env("OLDPWD", env) == -1)
-		return (1);
+		return (free(oldpwd), 1);
 	if (add_to_env_free(ft_strjoin_free2("OLDPWD=", oldpwd), env) == -1)
 		return (1);
 	if (del_from_env("PWD", env) == -1)

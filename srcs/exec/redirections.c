@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/05 13:35:07 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:28:34 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	create_heredoc(t_pipe *pipex, t_block *block, char **env)
 	char	*limiter;
 	int		line_no;
 
+	// if (WIFSIGNALED(g_last_signal))
+	// 	sig_handler_heredoc(WTERMSIG(g_last_signal));
 	pipex->fd[2] = open(".here_doc", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (pipex->fd[2] < 0)
 		joint_error_msg(".here_doc");
