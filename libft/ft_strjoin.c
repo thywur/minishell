@@ -6,11 +6,17 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:34:41 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/05 13:41:16 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:45:20 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+void	*free_and_null(char *s)
+{
+	free(s);
+	return (NULL);
+}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
