@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/05 13:00:11 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:40:32 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-// # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -26,7 +25,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <stdio.h>	 // !! a virer !!
+# include <stdio.h>
 
 # define WORD 5
 # define PIPE 6
@@ -162,17 +161,8 @@ char	*expand_token(char *data, char **env, int size, int exit_status);
 t_block	*join_tokens_into_blocks(t_token **tokens);
 
 // -- SIGNALS
-// void	signal_hub(int mod);
-// void	handle_sigchild(int signal);
-// void	sigint_handler(int signal);
-// void	signal_handler(int signal);
-// void	signal_exec_handler(int signal);
 void	sig_handler_main(int sig);
 void	sig_handler_child(int sig);
 void	sig_handler_heredoc(int sig);
-
-// -- TO DELETE !!!!
-void	print_tokens(t_token **tokens);
-void	print_blocks(t_block **blocks);
 
 #endif

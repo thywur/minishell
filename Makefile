@@ -6,7 +6,7 @@
 #    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/04/04 13:24:30 by alermolo         ###   ########.fr        #
+#    Updated: 2024/04/05 13:43:02 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,6 @@ SOURCES 	=		srcs/error.c		\
 					srcs/tokens/tokens_expansion.c \
 					srcs/blocks/join_tokens.c \
 					srcs/signals/signals.c \
-					srcs/to_delete.c \
 					main.c \
 
 #--flags-----------------------------------------------------------------------#

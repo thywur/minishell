@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:51:45 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/05 13:29:41 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:41:50 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin_free(char const *s1, char const *s2);
 char	*ft_strjoin_free2(char const *s1, char const *s2);
-char	*get_next_line(int fd);
-void	*free_and_null(char *s);
 char	*ft_strdup(const char *s);
-char	*ft_substr_gnl(char *s, unsigned int start, size_t len);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);

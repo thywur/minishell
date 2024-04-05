@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
+#    By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/08 16:11:24 by alermolo          #+#    #+#              #
-#    Updated: 2024/04/04 15:58:10 by quteriss         ###   ########.fr        #
+#    Updated: 2024/04/05 13:42:48 by alermolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS = 		ft_split.c	\
 			ft_strlen.c	\
 			ft_strcmp.c	\
 			ft_strncmp.c	\
+			ft_strdup.c	\
 			ft_substr.c	\
 			get_next_line.c		\
 			get_next_line_utils.c	\
