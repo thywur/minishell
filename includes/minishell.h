@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 17:08:15 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:00:11 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_pipe
 	int		cmd_count;
 	pid_t	*pids;
 	int		fd[4];
+	int		has_heredoc;
 }	t_pipe;
 
 typedef struct s_redir
@@ -168,6 +169,7 @@ t_block	*join_tokens_into_blocks(t_token **tokens);
 // void	signal_exec_handler(int signal);
 void	sig_handler_main(int sig);
 void	sig_handler_child(int sig);
+void	sig_handler_heredoc(int sig);
 
 // -- TO DELETE !!!!
 void	print_tokens(t_token **tokens);

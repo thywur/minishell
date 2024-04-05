@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:14:56 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/04 16:56:23 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:28:58 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	sig_handler_main(int sig)
 {
+	if (sig == SIGINT)
+	{
+		g_last_signal = 130;
+	}
 	(void)sig;
-	g_last_signal = 130;
 	write(2, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -24,7 +27,6 @@ void	sig_handler_main(int sig)
 
 void	sig_handler_child(int sig)
 {
-	// dprintf(2, "child sig handler\n");
 	if (sig == SIGINT)
 	{
 		g_last_signal = 130;
@@ -34,6 +36,22 @@ void	sig_handler_child(int sig)
 	{
 		g_last_signal = 131;
 		write(2, "Quit (core dumped)\n", 19);
+	}
+}
+
+void	sig_handler_heredoc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		(void)sig;
+		write(2, "\n", 1);
+		close(STDIN_FILENO);
+		g_last_signal = 130;
+	}
+	if (sig == SIGQUIT)
+	{
+		(void)sig;
+		write(2, "\b\b  \b\b", 6);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/30 16:08:39 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:00:41 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	init_pipex(t_pipe *pipex, t_block *cmd_lst, char ***env)
 	pipex->fd[1] = -1;
 	pipex->fd[2] = -1;
 	pipex->fd[3] = -1;
+	pipex->has_heredoc = 0;
 }
 
 int	cmd_handler(t_block **blocks, char ***env)

@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 17:08:54 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:08:26 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ static void	create_heredoc(t_pipe *pipex, t_block *block, char **env)
 	if (pipex->fd[2] < 0)
 		joint_error_msg(".here_doc");
 	// signal_hub(3);
+	// signal(SIGINT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &sig_handler_heredoc);
+	signal(SIGQUIT, &sig_handler_heredoc);
 	line = readline_heredoc(block, env);
 	line_no = 1;
 	limiter = ft_strjoin(block->redir->file, "\n");
@@ -52,6 +56,7 @@ static void	create_heredoc(t_pipe *pipex, t_block *block, char **env)
 		line = readline_heredoc(block, env);
 		line_no++;
 	}
+
 	if (!line && g_last_signal == 0)
 		err_heredoc(limiter, line_no);
 	free(line);
@@ -73,6 +78,8 @@ void	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		{
 			if (pipex->fd[2] > 0)
 				close(pipex->fd[2]);
+			pipex->has_heredoc = 1;
+			g_last_signal = 0;
 			create_heredoc(pipex, cmd_lst, *env);
 			pipex->fd[2] = open(".here_doc", O_RDONLY);
 		}

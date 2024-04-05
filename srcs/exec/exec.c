@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 17:04:13 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:16:04 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ static int	wait_for_children(t_pipe *pipex)
 		waitpid(pipex->pids[i], &status, 0);
 		i++;
 	}
-	if (WIFEXITED(status) && g_last_signal != 130)
+	if (WIFEXITED(status) && !pipex->has_heredoc)
 		g_last_signal = WEXITSTATUS(status);
+	signal(SIGINT, &sig_handler_child);
+	signal(SIGQUIT, &sig_handler_child);
 	return (g_last_signal);
 }
 
