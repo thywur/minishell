@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/05 15:05:12 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:30:21 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	*expand_variable(char *data, char **env, int *i, int exit_status)
 	if (!ft_strcmpr(field, "?"))
 	{
 		*i += 1;
+		free(field);
 		return (ft_itoa(exit_status));
 	}
 	word = ft_strjoin(field, "=");
