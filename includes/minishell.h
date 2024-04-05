@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 17:08:15 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:36:35 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,8 @@ char	*readline_heredoc(t_block *block, char **env);
 void	print_error(char *error_descriptor);
 int		ft_lstsize(t_block *lst);
 t_redir	*ft_lstlast(t_redir *lst);
+void	get_final_data_size_extra(char *quote, char car, int *size);
+void	expand_token_extra(char *quote, char car, char *word, int *j);
 
 // -- FREE LINKED CHAINS
 void	free_tokens(t_token **tokens);
@@ -161,16 +163,7 @@ char	*expand_token(char *data, char **env, int size, int exit_status);
 t_block	*join_tokens_into_blocks(t_token **tokens);
 
 // -- SIGNALS
-// void	signal_hub(int mod);
-// void	handle_sigchild(int signal);
-// void	sigint_handler(int signal);
-// void	signal_handler(int signal);
-// void	signal_exec_handler(int signal);
 void	sig_handler_main(int sig);
 void	sig_handler_child(int sig);
-
-// -- TO DELETE !!!!
-void	print_tokens(t_token **tokens);
-void	print_blocks(t_block **blocks);
 
 #endif

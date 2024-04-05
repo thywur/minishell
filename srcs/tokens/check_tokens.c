@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:07:06 by quteriss          #+#    #+#             */
-/*   Updated: 2024/03/30 14:20:29 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:30:56 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	check_tokens(t_token **token)
 			return (unexpected_token_error("|"), 0);
 		if (elem->type == PIPE && !elem->next)
 			return (unexpected_token_error("newline"), 0);
-		if (elem->type >= 1 && elem->type <= 4 && (!elem->next || elem->next->type != WORD))
+		if (elem->type >= 1 && elem->type <= 4 && (!elem->next
+				|| elem->next->type != WORD))
 		{
 			if (elem->next && elem->next->data)
 				return (unexpected_token_error(elem->next->data), 0);
@@ -43,11 +44,3 @@ int	check_tokens(t_token **token)
 	}
 	return (1);
 }
-
-/*
-
-[ ]	echo helloworld || pwd
-[ ] < | fuck
-[ ] |
-
-*/
