@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 17:09:35 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:18:47 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char ***env)
 		close(pipex->fd[0]);
 	if (dup2(pipex->fd[2], STDIN_FILENO) == -1)
 	{
-		perror(NULL);
+		perror("minishell");
 		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	}
 	if (pipex->fd[2] != 0)
 		close(pipex->fd[2]);
 	if (dup2(pipex->fd[3], STDOUT_FILENO) == -1)
 	{
-		perror(NULL);
+		perror("minishell");
 		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	}
 	if (pipex->fd[3] != 1)
@@ -94,8 +94,8 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		if (pipe(pipex->fd) == -1)
 			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 		set_fd(pipex, cmd_no);
-		if (cmd_lst->redir)
-			redirect(pipex, cmd_lst, env);
+		if (cmd_lst->redir && redirect(pipex, cmd_lst, env) == -1)
+			break ;
 		if (pipex->has_heredoc == 2)
 			break ;
 		pipex->pids[cmd_no] = fork();

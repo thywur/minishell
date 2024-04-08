@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 17:09:35 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:16:58 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define REDIRECT_APPEND 3
 # define REDIRECT_HEREDOC 4
 
-# define MALLOC_ERROR "malloc creation error"
+# define MALLOC_ERROR "memory allocation error"
 
 typedef struct s_pipe
 {
@@ -93,7 +93,7 @@ int		exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env);
 void	err_msg(char *err);
 void	joint_error_msg(char *err);
 void	fd_error(char *filename);
-void	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env);
+int		redirect(t_pipe *pipex, t_block *cmd_lst, char ***env);
 
 // -- BUILTINS
 int		is_builtin(char *cmd);
