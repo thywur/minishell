@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 13:52:51 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:40:34 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,5 +168,7 @@ t_block	*join_tokens_into_blocks(t_token **tokens);
 void	sig_handler_main(int sig);
 void	sig_handler_child(int sig);
 void	sig_handler_heredoc(int sig);
+void	launch_heredoc_sig_catcher(void);
+void	launch_child_sig_catcher(void);
 
 #endif

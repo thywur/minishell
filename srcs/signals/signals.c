@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:14:56 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/08 15:28:28 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:40:26 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,20 @@ void	sig_handler_heredoc(int sig)
 		(void)sig;
 		write(2, "\b\b  \b\b", 6);
 	}
+}
+
+void	launch_heredoc_sig_catcher(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &sig_handler_heredoc);
+	signal(SIGQUIT, &sig_handler_heredoc);
+}
+
+void	launch_child_sig_catcher(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &sig_handler_child);
+	signal(SIGQUIT, &sig_handler_child);
 }

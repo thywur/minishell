@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 17:01:53 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 15:22:06 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:48:41 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,26 @@ void	free_arr(char **arr)
 	free(arr);
 }
 
+static void	free_paths(t_pipe *pipex)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipex->cmd_count)
+	{
+		if (pipex->paths[i])
+			free(pipex->paths[i]);
+		i++;
+	}
+	free(pipex->paths);
+}
+
 void	free_pipex(t_pipe *pipex)
 {
 	int	i;
 
 	if (pipex->paths)
-	{
-		i = 0;
-		while (i < pipex->cmd_count)
-		{
-			if (pipex->paths[i])
-				free(pipex->paths[i]);
-			i++;
-		}
-		free(pipex->paths);
-	}
+		free_paths(pipex);
 	free(pipex->pids);
 	i = 0;
 	while (i < 4)

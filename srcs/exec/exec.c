@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 15:20:33 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:42:24 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ static void	path_not_found(t_pipe *pipex, t_block *cmd_lst, char **env)
 
 static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char ***env)
 {
-	signal(SIGINT, &sig_handler_child);
-	signal(SIGQUIT, &sig_handler_child);
+	launch_child_sig_catcher();
 	if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
 		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	if (pipex->fd[0] != 0)
@@ -89,8 +88,8 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 {
 	int	cmd_no;
 
-	cmd_no = 0;
-	while (cmd_no < pipex->cmd_count && cmd_lst)
+	cmd_no = -1;
+	while (++cmd_no < pipex->cmd_count && cmd_lst)
 	{
 		if (pipe(pipex->fd) == -1)
 			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
@@ -110,7 +109,6 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 			close(pipex->fd[3]);
 		pipex->fd[2] = pipex->fd[0];
 		cmd_lst = cmd_lst->next;
-		cmd_no++;
 	}
 	return (wait_for_children(pipex));
 }
