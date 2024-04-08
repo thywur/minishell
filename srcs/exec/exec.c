@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 13:48:24 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 14:35:05 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	path_not_found(t_pipe *pipex, t_block *cmd_lst, char **env)
 
 static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char ***env)
 {
+	dprintf(2, "fds before cmd %d %d\n", pipex->fd[2], pipex->fd[3]);
 	if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
 		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	if (pipex->fd[0] != 0)
@@ -98,7 +99,7 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		set_fd(pipex, cmd_no);
 		if (cmd_lst->redir)
 			redirect(pipex, cmd_lst, env);
-		dprintf(2, "heredoc status %d\n", pipex->has_heredoc);
+		// dprintf(2, "heredoc status %d\n", pipex->has_heredoc);
 		if (pipex->has_heredoc == 2)
 			break ;
 		pipex->pids[cmd_no] = fork();

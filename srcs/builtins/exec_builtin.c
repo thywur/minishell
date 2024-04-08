@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:09:10 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/29 16:18:43 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 14:38:16 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@ int	exec_builtin(int *fd, t_block *cmd_lst, t_pipe *pipex, char ***env)
 		status = ft_env(env, &fd[2]);
 	else if (!ft_strcmp(cmd_lst->cmd, "exit"))
 		status = ft_exit(cmd_lst->args, cmd_lst, pipex, env);
+	close(fd[2]);
+	close(fd[3]);
 	return (status);
 }

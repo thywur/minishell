@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/05 15:02:14 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:52:51 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_pipe
 	pid_t	*pids;
 	int		fd[4];
 	int		has_heredoc;
+	int		saved_stdin;
+	int		saved_stdout;
 }	t_pipe;
 
 typedef struct s_redir

@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 17:01:53 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 15:36:22 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 14:43:46 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,21 @@ void	free_pipex(t_pipe *pipex)
 		i++;
 	}
 	unlink(".here_doc");
+	if (dup2(pipex->saved_stdin, STDIN_FILENO) == -1)
+		perror(NULL);
+	if (dup2(pipex->saved_stdout, STDOUT_FILENO) == -1)
+		perror(NULL);
+	// // if (pipex->saved_stdin != 0)
+	close(pipex->saved_stdin);
+	// // if (pipex->saved_stdin > 1)
+	close(pipex->saved_stdout);
 }
 
 void	free_and_exit(t_pipe *pipex, t_block *blocks, char **env, int status)
 {
 	free_pipex(pipex);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	free_blocks(&blocks);
 	free_arr(env);
 	exit(status);
