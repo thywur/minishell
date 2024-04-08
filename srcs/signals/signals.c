@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:14:56 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/08 13:35:28 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:28:28 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	sig_handler_heredoc(int sig)
 	if (sig == SIGINT)
 	{
 		(void)sig;
-		// dprintf(2, "tut\n");
 		write(2, "\n", 1);
 		close(STDIN_FILENO);
 		g_last_signal = 130;
@@ -49,6 +48,6 @@ void	sig_handler_heredoc(int sig)
 	if (sig == SIGQUIT)
 	{
 		(void)sig;
-		 write(2, "\b\b  \b\b", 6);
+		write(2, "\b\b  \b\b", 6);
 	}
 }

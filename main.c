@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/08 14:40:23 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:27:33 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,7 @@ t_block	*process_cmdline(char *cmdline, int *exit_status, char **env)
 
 void	execute_cmdline(t_block **blocks, char ***env, int *exit_status)
 {
-	// int		saved_stdin;
-	// int		saved_stdout;
-
-	// saved_stdin = dup(STDIN_FILENO);
-	// saved_stdout = dup(STDOUT_FILENO);
 	*exit_status = cmd_handler(blocks, env);
-	// dup2(saved_stdin, STDIN_FILENO);
-	// dup2(saved_stdout, STDOUT_FILENO);
-	// close(saved_stdin);
-	// close(saved_stdout);
 	free_blocks(blocks);
 }
 
