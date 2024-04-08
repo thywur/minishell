@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/05 17:14:25 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:28:35 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,7 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 		if (pipex->pids[cmd_no] < 0)
 			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 		if (pipex->pids[cmd_no] == 0)
-		{
-			signal(SIGINT, SIG_IGN);
-			signal(SIGQUIT, SIG_IGN);
-			signal(SIGINT, &sig_handler_child);
-			signal(SIGQUIT, &sig_handler_child);
 			exec_child(pipex, cmd_lst, cmd_no, env);
-		}
 		if (pipex->fd[2] > 0)
 			close(pipex->fd[2]);
 		if (pipex->fd[3] > 0)
