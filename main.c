@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/08 17:09:35 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:59:52 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*read_cmdline(t_block **blocks, char **env)
 {
 	char	*cmdline;
 
-	// signal(SIGINT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &sig_handler_main);
 	cmdline = readline(">>> ");
@@ -61,7 +61,8 @@ t_block	*process_cmdline(char *cmdline, int *exit_status, char **env)
 
 	tokens = split_cmdline_into_tokens(cmdline);
 	if (!tokens)
-		return (NULL);
+		return (free(cmdline), NULL);
+	free(cmdline);
 	*exit_status = expand_tokens(&tokens, env, *exit_status);
 	if (*exit_status == 4)
 		return (free_tokens(&tokens), print_error(MALLOC_ERROR), NULL);
@@ -105,12 +106,8 @@ int	main(int argc, char **argv, char **env)
 		add_history(cmdline);
 		blocks = process_cmdline(cmdline, &g_status, env);
 		if (!blocks)
-		{
-			free(cmdline);
 			continue ;
-		}
 		execute_cmdline(&blocks, &env, &g_status);
-		free(cmdline);
 	}
 	return (g_status);
 }
