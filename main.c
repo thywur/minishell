@@ -6,13 +6,13 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/08 15:27:33 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:09:35 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_last_signal;
+int	g_status;
 
 int	dup_env(char ***env)
 {
@@ -39,7 +39,7 @@ char	*read_cmdline(t_block **blocks, char **env)
 {
 	char	*cmdline;
 
-	signal(SIGINT, SIG_IGN);
+	// signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &sig_handler_main);
 	cmdline = readline(">>> ");
@@ -86,27 +86,31 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*cmdline;
 	t_block	*blocks;
-	int		exit_status;
 
 	(void)argv;
 	if (argc > 1 || dup_env(&env) == -1)
 		return (1);
-	g_last_signal = 0;
-	exit_status = 0;
+	g_status = 0;
 	blocks = NULL;
 	while (42)
 	{
 		cmdline = read_cmdline(&blocks, env);
 		if (!cmdline)
-			return (g_last_signal);
+			return (g_status);
 		if (ft_strlen(cmdline) == 0)
+		{
+			free(cmdline);
 			continue ;
+		}
 		add_history(cmdline);
-		blocks = process_cmdline(cmdline, &exit_status, env);
+		blocks = process_cmdline(cmdline, &g_status, env);
 		if (!blocks)
+		{
+			free(cmdline);
 			continue ;
-		execute_cmdline(&blocks, &env, &exit_status);
+		}
+		execute_cmdline(&blocks, &env, &g_status);
 		free(cmdline);
 	}
-	return (g_last_signal);
+	return (g_status);
 }

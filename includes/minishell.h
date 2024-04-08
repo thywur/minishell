@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 15:40:34 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:09:35 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_token_args
 	int		pos;
 }		t_token_args;
 
-extern int	g_last_signal;
+extern int	g_status;
 
 // -- EXECUTION
 int		cmd_handler(t_block **blocks, char ***env);

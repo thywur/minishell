@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:21:54 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/05 13:15:15 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:09:35 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ char	*expand_string(char *str, char **env)
 	char	*new_str;
 	int		size;
 
-	size = get_final_data_size(str, env, 0, g_last_signal);
+	size = get_final_data_size(str, env, 0, g_status);
 	if (size == -1)
 		return (free(str), NULL);
-	new_str = expand_token(str, env, size, g_last_signal);
+	new_str = expand_token(str, env, size, g_status);
 	return (new_str);
 }
 
