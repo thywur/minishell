@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:14:56 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/08 12:49:54 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:35:28 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	sig_handler_heredoc(int sig)
 	if (sig == SIGINT)
 	{
 		(void)sig;
+		// dprintf(2, "tut\n");
 		write(2, "\n", 1);
 		close(STDIN_FILENO);
 		g_last_signal = 130;

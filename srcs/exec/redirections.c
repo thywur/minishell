@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/05 17:28:34 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:42:46 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	create_heredoc(t_pipe *pipex, t_block *block, char **env)
 	char	*limiter;
 	int		line_no;
 
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	// if (WIFSIGNALED(g_last_signal))
 	// 	sig_handler_heredoc(WTERMSIG(g_last_signal));
 	pipex->fd[2] = open(".here_doc", O_CREAT | O_RDWR | O_TRUNC, 0777);
@@ -48,13 +50,15 @@ static void	create_heredoc(t_pipe *pipex, t_block *block, char **env)
 	line = readline_heredoc(block, env);
 	line_no = 1;
 	limiter = ft_strjoin(block->redir->file, "\n");
-	while (line && ft_strcmp(line, limiter) != 0)
+	while (line && ft_strcmp(line, limiter) != 0 && g_last_signal != 130)
 	{
 		write(pipex->fd[2], line, ft_strlen(line));
 		free(line);
 		line = readline_heredoc(block, env);
 		line_no++;
 	}
+	if (g_last_signal == 130)
+		pipex->has_heredoc = 2;
 	if (!line && g_last_signal == 0)
 		err_heredoc(limiter, line_no);
 	free(line);
@@ -64,6 +68,7 @@ static void	create_heredoc(t_pipe *pipex, t_block *block, char **env)
 
 void	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 {
+	pipex->has_heredoc = 0;
 	while (cmd_lst->redir)
 	{
 		if (cmd_lst->redir->type == REDIRECT_IN)
@@ -79,8 +84,12 @@ void	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 			pipex->has_heredoc = 1;
 			g_last_signal = 0;
 			create_heredoc(pipex, cmd_lst, *env);
-			pipex->fd[2] = open(".here_doc", O_RDONLY);
+			if (pipex->has_heredoc != 2)
+				pipex->fd[2] = open(".here_doc", O_RDONLY);
+			// else
+			// 	pipex->fd[2] = STDIN_FILENO;
 		}
+		// dprintf(2, "fd %d\n", pipex->fd[2]);
 		if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
 		{
 			perror(NULL);

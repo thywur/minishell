@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 12:57:36 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:48:24 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	exec_child(t_pipe *pipex, t_block *cmd_lst, int cmd_no, char ***env)
 		close(pipex->fd[0]);
 	if (dup2(pipex->fd[2], STDIN_FILENO) == -1)
 	{
+		// dprintf(2, "ici\n");
 		perror(NULL);
 		free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 	}
@@ -90,22 +91,26 @@ int	exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env)
 	cmd_no = 0;
 	while (cmd_no < pipex->cmd_count && cmd_lst)
 	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
+		// signal(SIGINT, SIG_IGN);
+		// signal(SIGQUIT, SIG_IGN);
 		if (pipe(pipex->fd) == -1)
 			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 		set_fd(pipex, cmd_no);
 		if (cmd_lst->redir)
 			redirect(pipex, cmd_lst, env);
+		dprintf(2, "heredoc status %d\n", pipex->has_heredoc);
+		if (pipex->has_heredoc == 2)
+			break ;
 		pipex->pids[cmd_no] = fork();
 		if (pipex->pids[cmd_no] < 0)
 			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
 		if (pipex->pids[cmd_no] == 0)
 		{
-			signal(SIGINT, SIG_IGN);
-			signal(SIGQUIT, SIG_IGN);
+			// signal(SIGINT, SIG_IGN);
+			// signal(SIGQUIT, SIG_IGN);
 			signal(SIGINT, &sig_handler_child);
 			signal(SIGQUIT, &sig_handler_child);
+			// if (pipex->has_heredoc != 2)
 			exec_child(pipex, cmd_lst, cmd_no, env);
 		}
 		if (pipex->fd[2] > 0)
