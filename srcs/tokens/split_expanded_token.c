@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:33:41 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/09 12:54:20 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:01:37 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,11 @@ int	count_words_with_quotes(char *str)
 	return (count);
 }
 
-char	*split_word(char *str, int *pos)
+char	*split_word(char *str, int *pos, int i)
 {
 	char	in_quotes;
 	char	*word;
 	int		size;
-	int		i;
 
 	size = 0;
 	in_quotes = 0;
@@ -59,7 +58,6 @@ char	*split_word(char *str, int *pos)
 	word = malloc(sizeof(char) * (size + 1));
 	if (!word)
 		return (NULL);
-	i = -1;
 	while (++i < size)
 		word[i] = str[i];
 	word[i] = '\0';
@@ -71,7 +69,7 @@ char	*split_word(char *str, int *pos)
 
 char	**split_with_quotes(char *str)
 {
-	char 	**arr;
+	char	**arr;
 	int		count;
 	int		pos;
 	int		i;
@@ -86,7 +84,7 @@ char	**split_with_quotes(char *str)
 		return (NULL);
 	while (i < count)
 	{
-		arr[i] = split_word(str + pos, &pos);
+		arr[i] = split_word(str + pos, &pos, -1);
 		if (!arr[i])
 			return (free_arr(arr), NULL);
 		i++;
