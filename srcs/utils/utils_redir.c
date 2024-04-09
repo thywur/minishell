@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:02:04 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/04 17:04:41 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:05:51 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ t_redir	*create_redir(t_token *token, t_token *file_token, int *heredoc)
 {
 	t_redir	*redir;
 
-	*heredoc = 1;
-	if (file_token->is_inquote)
-		*heredoc = 0;
+	*heredoc = !file_token->is_inquote;
 	redir = malloc(sizeof(t_redir));
 	if (!redir)
 		return (NULL);

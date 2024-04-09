@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/09 13:22:18 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:43:22 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,12 @@ char	*expand_token(char *data, char **env, int size, int check_quotes)
 
 int	expand_tokens(t_token **tokens, char **env)
 {
+	t_token	*prev_token;
 	t_token	*token;
 	int		size;
 
 	token = *tokens;
+	prev_token = NULL;
 	while (token && token->next)
 	{
 		trim_token_data(token);
@@ -125,11 +127,13 @@ int	expand_tokens(t_token **tokens, char **env)
 		size = get_final_data_size(token->data, env, 0, 1);
 		if (size == -1)
 			return (1);
-		token->data = expand_token(token->data, env, size, 1);
+		if ((prev_token && prev_token->type != REDIRECT_HEREDOC) || !prev_token)
+			token->data = expand_token(token->data, env, size, 1);
 		if (!token->data)
 			return (1);
 		if (!token->is_inquote && split_expanded_token(&token, 0))
 			return (1);
+		prev_token = token;
 		token = token->next;
 	}
 	return (0);

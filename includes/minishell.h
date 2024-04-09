@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/09 13:22:31 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:43:25 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	ft_lst_delone(t_token **tokens, int index);
 void	ft_lstadd_back(t_redir **lst, t_redir *new);
 t_redir	*create_redir(t_token *token, t_token *file_token, int *heredoc);
 void	err_heredoc(char *limiter, int line_no);
-char	*readline_heredoc(t_block *block, char **env);
+char	*readline_heredoc(t_block *block, char **env, char *str);
 
 // -- UTILS
 void	print_error(char *error_descriptor);

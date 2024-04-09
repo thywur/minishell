@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 13:05:16 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/09 13:05:16 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:47:32 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	get_final_data_size_extra(char *quote, char car, int *size)
 		(*size)++;
 }
 
-void	expand_token_extra(char *quote, char car, char *word, int *j)
+void	expand_token_extra(char *quote, char car, char *word, int *size)
 {
 	if (!*quote && ft_contains("\"'", car))
 		*quote = car;
@@ -44,8 +44,8 @@ void	expand_token_extra(char *quote, char car, char *word, int *j)
 		*quote = 0;
 	else
 	{
-		word[*j] = car;
-		(*j)++;
+		word[*size] = car;
+		(*size)++;
 	}
 }
 

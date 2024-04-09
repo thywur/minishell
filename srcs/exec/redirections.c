@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 17:21:06 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:36:30 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ static void	create_heredoc(t_pipe *pipex, t_block *block, char **env)
 	pipex->fd[2] = open(".here_doc", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (pipex->fd[2] < 0)
 		joint_error_msg(".here_doc");
-	line = readline_heredoc(block, env);
 	line_no = 1;
 	limiter = ft_strjoin(block->redir->file, "\n");
+	line = readline_heredoc(block, env, limiter);
 	while (line && ft_strcmp(line, limiter) != 0 && g_status != 130)
 	{
 		write(pipex->fd[2], line, ft_strlen(line));
 		free(line);
-		line = readline_heredoc(block, env);
+		line = readline_heredoc(block, env, limiter);
 		line_no++;
 	}
 	if (g_status == 130)

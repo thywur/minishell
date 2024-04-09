@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:21:54 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/09 13:15:32 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:36:15 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ char	*expand_string(char *str, char **env)
 	return (new_str);
 }
 
-char	*readline_heredoc(t_block *block, char **env)
+char	*readline_heredoc(t_block *block, char **env, char *limiter)
 {
 	char	*line;
 
 	line = readline("> ");
 	if (line)
 		line = ft_strjoin_free(line, "\n");
-	if (line && block->heredoc_expansion && ft_contains(line, '$'))
+	if (line && ft_strcmp(line, limiter) != 0
+		&& block->heredoc_expansion && ft_contains(line, '$'))
 		line = expand_string(line, env);
 	return (line);
 }
