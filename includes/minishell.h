@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/09 13:02:28 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:22:31 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char	*expand_string(char *str, char **env);
 t_token	*add_token(t_token *token);
 t_token	*create_empty_token(void);
 void	trim_token_data(t_token *token);
-int		get_final_data_size(char *data, char **env, int size, int exit_status);
+int		get_final_data_size(char *data, char **env, int size, int check_quotes);
 int		is_inquote(char *data);
 
 // -- MALLOC UTILS
@@ -147,6 +147,7 @@ int		ft_lstsize(t_block *lst);
 t_redir	*ft_lstlast(t_redir *lst);
 void	get_final_data_size_extra(char *quote, char car, int *size);
 void	expand_token_extra(char *quote, char car, char *word, int *j);
+int		is_ascii(char *str);
 
 // -- FREE LINKED CHAINS
 void	free_tokens(t_token **tokens);
@@ -158,8 +159,8 @@ void	free_single_redir(t_redir **redir);
 int		check_tokens(t_token **token);
 t_token	*save_token(t_token *token, char *cmdline, t_token_args *args);
 t_token	*split_cmdline_into_tokens(char *cmdline);
-int		expand_tokens(t_token **tokens, char **env, int exit_status);
-char	*expand_token(char *data, char **env, int size, int exit_status);
+int		expand_tokens(t_token **tokens, char **env);
+char	*expand_token(char *data, char **env, int size, int check_quotes);
 int		split_expanded_token(t_token **tokens, int i);
 
 // -- BLOCKS

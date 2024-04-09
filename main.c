@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/08 17:59:52 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:22:46 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_block	*process_cmdline(char *cmdline, int *exit_status, char **env)
 	if (!tokens)
 		return (free(cmdline), NULL);
 	free(cmdline);
-	*exit_status = expand_tokens(&tokens, env, *exit_status);
+	*exit_status = expand_tokens(&tokens, env);
 	if (*exit_status == 4)
 		return (free_tokens(&tokens), print_error(MALLOC_ERROR), NULL);
 	if (!check_tokens(&tokens))
@@ -98,7 +98,7 @@ int	main(int argc, char **argv, char **env)
 		cmdline = read_cmdline(&blocks, env);
 		if (!cmdline)
 			return (g_status);
-		if (ft_strlen(cmdline) == 0)
+		if (!is_ascii(cmdline) || ft_strlen(cmdline) == 0)
 		{
 			free(cmdline);
 			continue ;

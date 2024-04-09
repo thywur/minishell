@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:21:54 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 17:09:35 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:15:32 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ char	*expand_string(char *str, char **env)
 	char	*new_str;
 	int		size;
 
-	size = get_final_data_size(str, env, 0, g_status);
+	size = get_final_data_size(str, env, 0, 0);
 	if (size == -1)
 		return (free(str), NULL);
-	new_str = expand_token(str, env, size, g_status);
+	new_str = expand_token(str, env, size, 0);
 	return (new_str);
 }
 

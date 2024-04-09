@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/09 12:40:28 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:22:18 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*expand_variable(char *data, char **env, int *i, int exit_status)
 	return (ft_strdup(field));
 }
 
-int	get_final_data_size(char *data, char **env, int size, int exit_status)
+int	get_final_data_size(char *data, char **env, int size, int check_quotes)
 {
 	char	*field;
 	char	quote;
@@ -65,9 +65,9 @@ int	get_final_data_size(char *data, char **env, int size, int exit_status)
 	quote = 0;
 	while (data[i])
 	{
-		if (data[i] == '$' && quote != '\'')
+		if (data[i] == '$' && !(quote == '\'' && check_quotes))
 		{
-			field = expand_variable(data + i, env, &i, exit_status);
+			field = expand_variable(data + i, env, &i, g_status);
 			k = ft_secured_strlen(field);
 			free(field);
 			if (k == -1)
@@ -81,7 +81,7 @@ int	get_final_data_size(char *data, char **env, int size, int exit_status)
 	return (size);
 }
 
-char	*expand_token(char *data, char **env, int size, int exit_status)
+char	*expand_token(char *data, char **env, int size, int check_quotes)
 {
 	char	*field;
 	char	quote;
@@ -97,9 +97,9 @@ char	*expand_token(char *data, char **env, int size, int exit_status)
 		return (NULL);
 	while (data[++i])
 	{
-		if (data[i] == '$' && quote != '\'')
+		if (data[i] == '$' && !(quote == '\'' && check_quotes))
 		{
-			field = expand_variable(data + i, env, &i, exit_status);
+			field = expand_variable(data + i, env, &i, g_status);
 			j += ft_strcpy(word + j, field);
 			free(field);
 		}
@@ -110,7 +110,7 @@ char	*expand_token(char *data, char **env, int size, int exit_status)
 	return (free(data), word);
 }
 
-int	expand_tokens(t_token **tokens, char **env, int exit_status)
+int	expand_tokens(t_token **tokens, char **env)
 {
 	t_token	*token;
 	int		size;
@@ -122,10 +122,10 @@ int	expand_tokens(t_token **tokens, char **env, int exit_status)
 		if (!token->data)
 			return (1);
 		token->is_inquote = is_inquote(token->data);
-		size = get_final_data_size(token->data, env, 0, exit_status);
+		size = get_final_data_size(token->data, env, 0, 1);
 		if (size == -1)
 			return (1);
-		token->data = expand_token(token->data, env, size, exit_status);
+		token->data = expand_token(token->data, env, size, 1);
 		if (!token->data)
 			return (1);
 		if (!token->is_inquote && split_expanded_token(&token, 0))
