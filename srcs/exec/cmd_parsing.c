@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:46:35 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 15:25:25 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:10:00 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ static char	*cmd_path(char **paths, char *cmd, int i)
 			if ((!access(cmd_path, F_OK) && access(cmd_path, X_OK)) || !cmd)
 			{
 				free(cmd_path);
-				cmd_path = ft_strjoin("permission denied: ", cmd);
+				cmd_path = ft_strjoin("minishell: permission denied: ", cmd);
 				err_msg(cmd_path);
 				return (NULL);
 			}
 			free(cmd_path);
 		}
 	}
-	cmd_path = ft_strjoin("command not found: ", cmd);
+	cmd_path = ft_strjoin("minishell: command not found: ", cmd);
 	err_msg(cmd_path);
 	return (NULL);
 }
