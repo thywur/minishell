@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/09 12:55:11 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:02:28 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define REDIRECT_APPEND 3
 # define REDIRECT_HEREDOC 4
 
-# define MALLOC_ERROR "malloc creation error"
+# define MALLOC_ERROR "memory allocation error"
 
 typedef struct s_pipe
 {
@@ -81,7 +81,7 @@ typedef struct s_token_args
 	int		pos;
 }		t_token_args;
 
-extern int	g_last_signal;
+extern int	g_status;
 
 // -- EXECUTION
 int		cmd_handler(t_block **blocks, char ***env);
@@ -93,7 +93,7 @@ int		exec_cmd(t_pipe *pipex, t_block *cmd_lst, char ***env);
 void	err_msg(char *err);
 void	joint_error_msg(char *err);
 void	fd_error(char *filename);
-void	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env);
+int		redirect(t_pipe *pipex, t_block *cmd_lst, char ***env);
 
 // -- BUILTINS
 int		is_builtin(char *cmd);
@@ -169,5 +169,7 @@ t_block	*join_tokens_into_blocks(t_token **tokens);
 void	sig_handler_main(int sig);
 void	sig_handler_child(int sig);
 void	sig_handler_heredoc(int sig);
+void	launch_heredoc_sig_catcher(void);
+void	launch_child_sig_catcher(void);
 
 #endif

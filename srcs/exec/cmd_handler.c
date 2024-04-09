@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:05:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 14:40:44 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:21:54 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ static void	init_pipex(t_pipe *pipex, t_block *cmd_lst, char ***env)
 	pipex->fd[3] = -1;
 	pipex->has_heredoc = 0;
 	pipex->saved_stdin = dup(STDIN_FILENO);
-	// // dprintf(2, "saved stdin fd %d\n", pipex->saved_stdin);
 	if (pipex->saved_stdin == -1)
 		perror(NULL);
 	pipex->saved_stdout = dup(STDOUT_FILENO);
-	// // dprintf(2, "saved stdout fd %d\n", pipex->saved_stdout);
 	if (pipex->saved_stdout == -1)
 		perror(NULL);
 }

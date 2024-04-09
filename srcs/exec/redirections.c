@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 13:42:46 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:21:06 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,30 @@ static void	create_heredoc(t_pipe *pipex, t_block *block, char **env)
 	char	*limiter;
 	int		line_no;
 
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	// if (WIFSIGNALED(g_last_signal))
-	// 	sig_handler_heredoc(WTERMSIG(g_last_signal));
+	launch_heredoc_sig_catcher();
 	pipex->fd[2] = open(".here_doc", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (pipex->fd[2] < 0)
 		joint_error_msg(".here_doc");
-	signal(SIGINT, &sig_handler_heredoc);
-	signal(SIGQUIT, &sig_handler_heredoc);
 	line = readline_heredoc(block, env);
 	line_no = 1;
 	limiter = ft_strjoin(block->redir->file, "\n");
-	while (line && ft_strcmp(line, limiter) != 0 && g_last_signal != 130)
+	while (line && ft_strcmp(line, limiter) != 0 && g_status != 130)
 	{
 		write(pipex->fd[2], line, ft_strlen(line));
 		free(line);
 		line = readline_heredoc(block, env);
 		line_no++;
 	}
-	if (g_last_signal == 130)
+	if (g_status == 130)
 		pipex->has_heredoc = 2;
-	if (!line && g_last_signal == 0)
+	if (!line && g_status == 0)
 		err_heredoc(limiter, line_no);
 	free(line);
 	free(limiter);
 	close(pipex->fd[2]);
 }
 
-void	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
+int	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 {
 	pipex->has_heredoc = 0;
 	while (cmd_lst->redir)
@@ -82,19 +77,13 @@ void	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 			if (pipex->fd[2] > 0)
 				close(pipex->fd[2]);
 			pipex->has_heredoc = 1;
-			g_last_signal = 0;
+			g_status = 0;
 			create_heredoc(pipex, cmd_lst, *env);
-			if (pipex->has_heredoc != 2)
-				pipex->fd[2] = open(".here_doc", O_RDONLY);
-			// else
-			// 	pipex->fd[2] = STDIN_FILENO;
+			pipex->fd[2] = open(".here_doc", O_RDONLY);
 		}
-		// dprintf(2, "fd %d\n", pipex->fd[2]);
 		if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
-		{
-			perror(NULL);
-			free_and_exit(pipex, cmd_lst, *env, EXIT_FAILURE);
-		}
+			return (perror(cmd_lst->redir->file), -1);
 		free_single_redir(&cmd_lst->redir);
 	}
+	return (0);
 }

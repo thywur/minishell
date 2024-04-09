@@ -6,13 +6,13 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:10:34 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/08 14:40:23 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:59:52 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_last_signal;
+int	g_status;
 
 int	dup_env(char ***env)
 {
@@ -61,7 +61,8 @@ t_block	*process_cmdline(char *cmdline, int *exit_status, char **env)
 
 	tokens = split_cmdline_into_tokens(cmdline);
 	if (!tokens)
-		return (NULL);
+		return (free(cmdline), NULL);
+	free(cmdline);
 	*exit_status = expand_tokens(&tokens, env, *exit_status);
 	if (*exit_status == 4)
 		return (free_tokens(&tokens), print_error(MALLOC_ERROR), NULL);
@@ -78,16 +79,7 @@ t_block	*process_cmdline(char *cmdline, int *exit_status, char **env)
 
 void	execute_cmdline(t_block **blocks, char ***env, int *exit_status)
 {
-	// int		saved_stdin;
-	// int		saved_stdout;
-
-	// saved_stdin = dup(STDIN_FILENO);
-	// saved_stdout = dup(STDOUT_FILENO);
 	*exit_status = cmd_handler(blocks, env);
-	// dup2(saved_stdin, STDIN_FILENO);
-	// dup2(saved_stdout, STDOUT_FILENO);
-	// close(saved_stdin);
-	// close(saved_stdout);
 	free_blocks(blocks);
 }
 
@@ -95,27 +87,27 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*cmdline;
 	t_block	*blocks;
-	int		exit_status;
 
 	(void)argv;
 	if (argc > 1 || dup_env(&env) == -1)
 		return (1);
-	g_last_signal = 0;
-	exit_status = 0;
+	g_status = 0;
 	blocks = NULL;
 	while (42)
 	{
 		cmdline = read_cmdline(&blocks, env);
 		if (!cmdline)
-			return (g_last_signal);
+			return (g_status);
 		if (ft_strlen(cmdline) == 0)
+		{
+			free(cmdline);
 			continue ;
+		}
 		add_history(cmdline);
-		blocks = process_cmdline(cmdline, &exit_status, env);
+		blocks = process_cmdline(cmdline, &g_status, env);
 		if (!blocks)
 			continue ;
-		execute_cmdline(&blocks, &env, &exit_status);
-		free(cmdline);
+		execute_cmdline(&blocks, &env, &g_status);
 	}
-	return (g_last_signal);
+	return (g_status);
 }

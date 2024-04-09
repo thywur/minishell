@@ -6,31 +6,11 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:46:35 by alermolo          #+#    #+#             */
-/*   Updated: 2024/03/25 15:03:51 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:25:25 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	parse_cmds(t_pipe *pipex, t_block *cmd_lst)
-// {
-// 	int		i;
-// 	// int		j;
-
-// 	i = 0;
-// 	j = 0;
-// 	pipex->cmds = malloc(sizeof(char **) * (pipex->cmd_count + 1));
-// 	if (!pipex->cmds)
-// 		free_and_exit(pipex, EXIT_FAILURE);
-// 	while (cmd_lst)
-// 	{
-// 		// pipex->cmds[j] = ft_split(argv[i], " \t\v\n\f\r");
-// 		pipex->cmds[i]
-// 		i++;
-// 		j++;
-// 	}
-// 	pipex->cmds[j] = 0;
-// }
 
 static char	**parse_paths(char ***env)
 {
@@ -110,5 +90,3 @@ void	combine_paths(char ***env, t_pipe *pipex, t_block *cmd_lst)
 		free_arr(env_paths);
 	pipex->paths[i] = 0;
 }
-
-//blep
