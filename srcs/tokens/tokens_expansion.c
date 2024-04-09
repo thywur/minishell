@@ -6,7 +6,7 @@
 /*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:41:45 by quteriss          #+#    #+#             */
-/*   Updated: 2024/04/05 17:30:21 by quteriss         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:40:28 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ int	expand_tokens(t_token **tokens, char **env, int exit_status)
 			return (1);
 		token->data = expand_token(token->data, env, size, exit_status);
 		if (!token->data)
+			return (1);
+		if (!token->is_inquote && split_expanded_token(&token, 0))
 			return (1);
 		token = token->next;
 	}

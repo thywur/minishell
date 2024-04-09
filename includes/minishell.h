@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:37:52 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 13:52:51 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:55:11 by quteriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ t_token	*save_token(t_token *token, char *cmdline, t_token_args *args);
 t_token	*split_cmdline_into_tokens(char *cmdline);
 int		expand_tokens(t_token **tokens, char **env, int exit_status);
 char	*expand_token(char *data, char **env, int size, int exit_status);
+int		split_expanded_token(t_token **tokens, int i);
 
 // -- BLOCKS
 t_block	*join_tokens_into_blocks(t_token **tokens);

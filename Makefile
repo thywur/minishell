@@ -6,7 +6,7 @@
 #    By: quteriss <quteriss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/04/05 15:01:51 by quteriss         ###   ########.fr        #
+#    Updated: 2024/04/08 18:40:25 by quteriss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SOURCES 	=		srcs/error.c		\
 					srcs/tokens/save_token.c \
 					srcs/tokens/cmdline_to_tokens.c \
 					srcs/tokens/tokens_expansion.c \
+					srcs/tokens/split_expanded_token.c \
 					srcs/blocks/join_tokens.c \
 					srcs/signals/signals.c \
 					main.c \
