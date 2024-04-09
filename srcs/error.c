@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:43:07 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/04 15:43:57 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:09:28 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	fd_error(char *filename)
 
 	if (access(filename, F_OK) != 0)
 	{
-		msg = ft_strjoin("no such file or directory: ", filename);
+		msg = ft_strjoin("minishell: No such file or directory: ", filename);
 		err_msg(msg);
 	}
 	else if (access(filename, X_OK) != 0)
 	{
-		msg = ft_strjoin("permission denied: ", filename);
+		msg = ft_strjoin("minishell: Permission denied: ", filename);
 		err_msg(msg);
 	}
 	else

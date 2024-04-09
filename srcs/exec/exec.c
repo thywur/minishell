@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:54:06 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 17:18:47 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:02:58 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,17 @@
 static int	wait_for_children(t_pipe *pipex)
 {
 	int	i;
-	int	status;
 
 	i = 0;
-	status = 0;
 	while (i < pipex->cmd_count)
 	{
-		waitpid(pipex->pids[i], &status, 0);
+		waitpid(pipex->pids[i], &g_status, 0);
 		i++;
 	}
-	if (WIFEXITED(status) && !pipex->has_heredoc)
-		g_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		sig_handler_child(WTERMSIG(status));
+	if (WIFEXITED(g_status) && !pipex->has_heredoc)
+		g_status = WEXITSTATUS(g_status);
+	else if (WIFSIGNALED(g_status))
+		sig_handler_child(WTERMSIG(g_status));
 	return (g_status);
 }
 

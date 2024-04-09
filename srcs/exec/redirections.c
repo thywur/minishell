@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:43:28 by alermolo          #+#    #+#             */
-/*   Updated: 2024/04/08 17:21:06 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:08:10 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	redirect(t_pipe *pipex, t_block *cmd_lst, char ***env)
 			pipex->fd[2] = open(".here_doc", O_RDONLY);
 		}
 		if (pipex->fd[2] == -1 || pipex->fd[3] == -1)
-			return (perror(cmd_lst->redir->file), -1);
+			return (fd_error(cmd_lst->redir->file), 1);
 		free_single_redir(&cmd_lst->redir);
 	}
 	return (0);
